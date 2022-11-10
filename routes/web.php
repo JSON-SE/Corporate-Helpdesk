@@ -24,8 +24,10 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::inertia('dashboard', 'Dashboard')->name('dashboard');
+    Route::inertia('ticket/create', 'Ticket/Create')->name('ticket.create');
+    Route::inertia('management/index', 'Management/Index')->name('management.index');
+});
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
