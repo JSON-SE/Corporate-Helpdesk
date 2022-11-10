@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -35,13 +34,21 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:'.User::class,
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'initials' => 'required|string|max:255',
+            'office_id' => 'required',
+            'email' => 'required|string|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'firstName' => $request->firstName,
+            'middleName' => $request->middleName,
+            'lastName' => $request->lastName,
+            'initials' => $request->initials,
+            'role_id' => 1,
+            'office_id' => $request->office_id,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);

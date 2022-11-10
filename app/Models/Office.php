@@ -9,5 +9,6 @@ class Office extends Model
     use HasFactory;
     protected $fillable = [
         'office',
+        'abbr'
     ];
 }
