@@ -6,6 +6,10 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 
+const props = defineProps({
+    offices: Object,
+});
+
 const form = useForm({
     firstName: "",
     middleName: "",
@@ -165,7 +169,11 @@ const submit = () => {
                                 required=""
                                 class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                             >
-                                <option value="#">Select Office</option>
+                                <optgroup v-for="office in offices">
+                                    <option :value="office.id">
+                                        {{ office.office }}
+                                    </option>
+                                </optgroup>
                             </select>
                             <InputError
                                 class="mt-2"
@@ -231,7 +239,7 @@ const submit = () => {
                                 v-model="form.password_confirmation"
                                 id="confirm_password"
                                 name="confirm_password"
-                                type="confirm_password"
+                                type="password"
                                 autocomplete="confirm_password"
                                 required=""
                                 class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -240,30 +248,6 @@ const submit = () => {
                                 class="mt-2"
                                 :message="form.errors.password_confirmation"
                             />
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <input
-                                id="remember-me"
-                                name="remember-me"
-                                type="checkbox"
-                                class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                                for="remember-me"
-                                class="ml-2 block text-sm text-gray-900"
-                                >Remember me</label
-                            >
-                        </div>
-
-                        <div class="text-sm">
-                            <a
-                                href="#"
-                                class="font-medium text-indigo-600 hover:text-indigo-500"
-                                >Forgot your password?</a
-                            >
                         </div>
                     </div>
 
