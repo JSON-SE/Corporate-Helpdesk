@@ -1,23 +1,15 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Ticket;
+use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
-use App\Models\Ticket;
 
 class TicketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -25,7 +17,9 @@ class TicketController extends Controller
      */
     public function create()
     {
-        //
+        // $user = Auth::user();
+        $categories = Category::all();
+        return Inertia::render('Ticket/Create', compact('categories'));
     }
 
     /**
@@ -36,7 +30,14 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request)
     {
-        //
+        Ticket::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'user_id' => Auth::id(),
+            'status_id' => 1
+        ]);
+
+        return Inertia::render('Dashboard');
     }
 
     /**

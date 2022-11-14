@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -13,7 +12,7 @@ class StoreTicketRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +23,10 @@ class StoreTicketRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'content' => 'required',
+            'user_id' => 'required',
+            'status_id' => 'required'
         ];
     }
 }
