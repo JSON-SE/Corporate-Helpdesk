@@ -2,6 +2,8 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm, Link } from "@inertiajs/inertia-vue3";
 import InputError from "@/Components/InputError.vue";
+import TextInput from "@/Components/TextInput.vue";
+import InputLabel from "@/Components/InputLabel.vue";
 
 const props = defineProps({
     categories: Object,

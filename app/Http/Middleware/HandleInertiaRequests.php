@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
@@ -43,6 +42,9 @@ class HandleInertiaRequests extends Middleware
                     'location' => $request->url(),
                 ]);
             },
+            'flash' => [
+                'message' => session('message')
+            ]
         ]);
     }
 }

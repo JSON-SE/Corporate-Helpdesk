@@ -30,6 +30,7 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request)
     {
+        // dd('store is triggered');
         Ticket::create([
             'title' => $request->title,
             'content' => $request->content,
@@ -37,7 +38,7 @@ class TicketController extends Controller
             'status_id' => 1
         ]);
 
-        return Inertia::render('Dashboard');
+        return redirect()->route('ticket.create')->with('message', 'Ticket created successfully');
     }
 
     /**

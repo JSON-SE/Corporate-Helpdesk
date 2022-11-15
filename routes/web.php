@@ -28,8 +28,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('ticket/create', [TicketController::class, 'create'])->name('ticket.create');
-    Route::post('ticket/store', [TicketController::class, 'store'])->name('ticket.store');
+    Route::resource('ticket', TicketController::class);
     Route::inertia('management/index', 'Management/Index')->name('management.index');
 });
 
