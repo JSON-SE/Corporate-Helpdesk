@@ -7,6 +7,9 @@ import { Link } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
     tickets: Object,
+    categories: Object,
+    offices: Object,
+    statuses: Object,
 });
 </script>
 
@@ -68,17 +71,7 @@ const props = defineProps({
                     <div v-else>
                         <div class="px-4 sm:px-6 lg:px-8 mt-6 pb-8">
                             <div class="sm:flex sm:items-center">
-                                <div class="sm:flex-auto">
-                                    <h1
-                                        class="text-xl font-semibold text-gray-900"
-                                    >
-                                        Tickets
-                                    </h1>
-                                    <p class="mt-2 text-sm text-gray-700">
-                                        list of open tickets
-                                    </p>
-                                </div>
-                                <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                                <div class="mr-5 mt-6">
                                     <Link
                                         :href="route('ticket.create')"
                                         type="button"
@@ -86,6 +79,75 @@ const props = defineProps({
                                     >
                                         New Ticket
                                     </Link>
+                                </div>
+                                <!-- Category -->
+                                <div class="mr-5">
+                                    <label
+                                        for="category"
+                                        class="block text-sm font-medium text-gray-700"
+                                        >Category</label
+                                    >
+                                    <select
+                                        id="location"
+                                        name="location"
+                                        class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    >
+                                        <option selected="">
+                                            Select Category
+                                        </option>
+                                        <option
+                                            v-for="category in categories"
+                                            :key="category.id"
+                                        >
+                                            {{ category.category }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <!-- Status -->
+                                <div class="mr-5">
+                                    <label
+                                        for="status"
+                                        class="block text-sm font-medium text-gray-700"
+                                        >Status</label
+                                    >
+                                    <select
+                                        id="location"
+                                        name="location"
+                                        class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    >
+                                        <option selected="">
+                                            Select Status
+                                        </option>
+                                        <option
+                                            v-for="status in statuses"
+                                            :key="status.id"
+                                        >
+                                            {{ status.status }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <!-- office -->
+                                <div>
+                                    <label
+                                        for="office"
+                                        class="block text-sm font-medium text-gray-700"
+                                        >Office</label
+                                    >
+                                    <select
+                                        id="location"
+                                        name="location"
+                                        class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    >
+                                        <option selected="">
+                                            Select Office
+                                        </option>
+                                        <option
+                                            v-for="office in offices"
+                                            :key="office.id"
+                                        >
+                                            {{ office.office }}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="mt-8 flex flex-col">
