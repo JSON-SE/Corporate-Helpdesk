@@ -10,4 +10,9 @@ class Category extends Model
     protected $fillable = [
         'category',
     ];
+
+    public function tickets()
+    {
+        return $this->hasOne(Ticket::class);
+    }
 }

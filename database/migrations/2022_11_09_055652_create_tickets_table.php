@@ -14,10 +14,12 @@ return new class extends Migration {
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')->constrained();
             $table->string('title');
             $table->string('content');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('status_id')->constrained();
+            $table->longText('remarks')->nullable();
             $table->timestamps();
         });
     }

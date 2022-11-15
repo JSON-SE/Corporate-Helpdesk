@@ -8,7 +8,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $tickets = Ticket::all();
+        $tickets = Ticket::with('users.offices', 'statuses')->get();
         return Inertia::render('Dashboard', compact('tickets'));
     }
 }

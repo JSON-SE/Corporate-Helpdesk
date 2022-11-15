@@ -46,27 +46,27 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function office()
+    public function offices()
     {
         return $this->belongsTo(Office::class, 'office_id');
     }
 
-    public function role()
+    public function roles()
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
 
-    public function staff()
+    public function staffs()
     {
         return $this->hasMany(Staff::class);
     }
 
-    public function ticket()
+    public function tickets()
     {
         return $this->hasMany(Ticket::class);
     }
 
-    public function message()
+    public function messages()
     {
         return $this->hasMany(Message::class);
     }

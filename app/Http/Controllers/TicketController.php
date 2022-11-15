@@ -32,6 +32,7 @@ class TicketController extends Controller
     {
         // dd('store is triggered');
         Ticket::create([
+            'category_id' => $request->category_id,
             'title' => $request->title,
             'content' => $request->content,
             'user_id' => Auth::id(),

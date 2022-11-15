@@ -11,4 +11,9 @@ class Office extends Model
         'office',
         'abbr'
     ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

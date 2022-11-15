@@ -10,4 +10,9 @@ class Status extends Model
     protected $fillable = [
         'status',
     ];
+
+    public function tickets()
+    {
+        return $this->hasOne(Ticket::class);
+    }
 }
