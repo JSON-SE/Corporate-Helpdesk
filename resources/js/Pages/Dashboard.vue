@@ -1,5 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import Pagination from "@/Components/Pagination.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { PlusIcon } from "@heroicons/vue/20/solid";
 import { Link } from "@inertiajs/inertia-vue3";
@@ -106,6 +107,12 @@ const props = defineProps({
                                                             scope="col"
                                                             class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                                                         >
+                                                            Category
+                                                        </th>
+                                                        <th
+                                                            scope="col"
+                                                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                                                        >
                                                             Ticket
                                                         </th>
                                                         <th
@@ -144,6 +151,15 @@ const props = defineProps({
                                                         v-for="ticket in tickets"
                                                         :key="ticket.id"
                                                     >
+                                                        <td
+                                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
+                                                        >
+                                                            {{
+                                                                ticket
+                                                                    .categories
+                                                                    .category
+                                                            }}
+                                                        </td>
                                                         <td
                                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
                                                         >
@@ -257,6 +273,7 @@ const props = defineProps({
                                     </div>
                                 </div>
                             </div>
+                            <Pagination> </Pagination>
                         </div>
                     </div>
                 </div>

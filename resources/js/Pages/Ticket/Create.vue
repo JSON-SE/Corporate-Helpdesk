@@ -68,15 +68,13 @@ const submit = () => {
                                                 autocomplete="category_id"
                                                 class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                             >
-                                                <optgroup
+                                                <option
                                                     v-for="category in categories"
+                                                    :key="category.id"
+                                                    :value="category.id"
                                                 >
-                                                    <option
-                                                        :value="category.id"
-                                                    >
-                                                        {{ category.category }}
-                                                    </option>
-                                                </optgroup>
+                                                    {{ category.category }}
+                                                </option>
                                             </select>
                                             <inputerror
                                                 class="mt-2"
@@ -115,8 +113,8 @@ const submit = () => {
                                             <label
                                                 for="content"
                                                 class="block text-sm font-medium text-gray-700"
-                                                >What seems to be the
-                                                problem?</label
+                                                >Tell us more.
+                                                <small>(Optional)</small></label
                                             >
                                             <div class="mt-1">
                                                 <textarea
