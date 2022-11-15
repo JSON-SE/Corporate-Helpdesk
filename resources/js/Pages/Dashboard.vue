@@ -177,10 +177,52 @@ const props = defineProps({
                                                         <td
                                                             class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                                         >
-                                                            {{
-                                                                ticket.statuses
-                                                                    .status
-                                                            }}
+                                                            <!-- open -->
+                                                            <div
+                                                                v-if="
+                                                                    ticket
+                                                                        .statuses
+                                                                        .id == 1
+                                                                "
+                                                            >
+                                                                <span
+                                                                    class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800"
+                                                                    >Open</span
+                                                                >
+                                                            </div>
+                                                            <!-- in-progress -->
+                                                            <div
+                                                                v-else-if="
+                                                                    ticket
+                                                                        .statuses
+                                                                        .id == 2
+                                                                "
+                                                            >
+                                                                <span
+                                                                    class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800"
+                                                                    >In-progress</span
+                                                                >
+                                                            </div>
+                                                            <!-- Cancelled -->
+                                                            <div
+                                                                v-else-if="
+                                                                    ticket
+                                                                        .statuses
+                                                                        .id == 3
+                                                                "
+                                                            >
+                                                                <span
+                                                                    class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800"
+                                                                    >Cancelled</span
+                                                                >
+                                                            </div>
+                                                            <!-- Complete -->
+                                                            <div v-else>
+                                                                <span
+                                                                    class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800"
+                                                                    >Complete</span
+                                                                >
+                                                            </div>
                                                         </td>
                                                         <td
                                                             class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
