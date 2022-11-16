@@ -14,7 +14,7 @@ class DashboardController extends Controller
         $offices = Office::all();
         $categories = Category::all();
         $statuses = Status::all();
-        $tickets = Ticket::all()->map(fn ($ticket) => [
+        $tickets = Ticket::latest()->paginate(10)->through(fn ($ticket) => [
             'id' => $ticket->id,
             'category' => $ticket->categories->category,
             'title' => $ticket->title,
@@ -23,7 +23,8 @@ class DashboardController extends Controller
             'office' => $ticket->users->offices->abbr,
             'status' => $ticket->statuses->status,
             'created_at' => $ticket->created_at->diffForHumans()
-        ])->toArray();
+        ]);
+        // dd($tickets);
         return Inertia::render('Dashboard', compact('tickets', 'categories', 'offices', 'statuses'));
     }
 }

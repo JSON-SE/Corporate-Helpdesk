@@ -1,6 +1,5 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import Pagination from "@/Components/Pagination.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { PlusIcon } from "@heroicons/vue/20/solid";
 import { Link } from "@inertiajs/inertia-vue3";
@@ -27,7 +26,7 @@ const props = defineProps({
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <!-- If ticket is empty -->
-                    <div v-if="!tickets.length">
+                    <div v-if="!tickets.data.length">
                         <div class="p-6 bg-white border-b border-gray-200">
                             <div class="text-center">
                                 <svg
@@ -243,7 +242,7 @@ const props = defineProps({
                                                     class="divide-y divide-gray-200 bg-white"
                                                 >
                                                     <tr
-                                                        v-for="ticket in tickets"
+                                                        v-for="ticket in tickets.data"
                                                         :key="ticket.id"
                                                     >
                                                         <td
@@ -355,7 +354,52 @@ const props = defineProps({
                                     </div>
                                 </div>
                             </div>
-                            <Pagination> </Pagination>
+                            <!-- pagination -->
+                            <nav
+                                class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
+                                aria-label="Pagination"
+                            >
+                                <div class="hidden sm:block">
+                                    <p class="text-sm text-gray-700">
+                                        Showing
+                                        {{ " " }}
+                                        <span class="font-medium">{{
+                                            tickets.current_page
+                                        }}</span>
+                                        {{ " " }}
+                                        to
+                                        {{ " " }}
+                                        <span class="font-medium">{{
+                                            tickets.per_page
+                                        }}</span>
+                                        {{ " " }}
+                                        of
+                                        {{ " " }}
+                                        <span class="font-medium">{{
+                                            tickets.total
+                                        }}</span>
+                                        {{ " " }}
+                                        results
+                                    </p>
+                                </div>
+                                <div
+                                    class="flex flex-1 justify-between sm:justify-end"
+                                >
+                                    <template v-for="link in tickets.links">
+                                        <Link
+                                            v-if="link.url"
+                                            :href="link.url"
+                                            v-html="link.label"
+                                            class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 mr-3"
+                                        />
+                                        <span
+                                            v-else
+                                            v-html="link.label"
+                                            class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 mr-3"
+                                        ></span>
+                                    </template>
+                                </div>
+                            </nav>
                         </div>
                     </div>
                 </div>
