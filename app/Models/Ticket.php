@@ -8,7 +8,7 @@ class Ticket extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'category_id', 'title', 'content',  'user_id', 'status_id', 'remarks'
+        'category_id', 'reference_number', 'title', 'content',  'user_id', 'status_id', 'remarks'
     ];
 
     public function getDiffForHumans()

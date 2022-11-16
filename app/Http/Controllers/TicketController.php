@@ -31,13 +31,35 @@ class TicketController extends Controller
     public function store(StoreTicketRequest $request)
     {
         // dd('store is triggered');
-        Ticket::create([
+        $newTicket = Ticket::create([
             'category_id' => $request->category_id,
             'title' => $request->title,
             'content' => $request->content,
             'user_id' => Auth::id(),
             'status_id' => 1
         ]);
+        // Storing Reference number
+        if ($request->category_id == 1) {
+            $storeRefId = Ticket::find($newTicket->id);
+            $storeRefId->reference_number = 'HW' . '-' . $newTicket->id;
+            $storeRefId->save();
+        } elseif ($request->category_id == 2) {
+            $storeRefId = Ticket::find($newTicket->id);
+            $storeRefId->reference_number = 'SW' . '-' . $newTicket->id;
+            $storeRefId->save();
+        } elseif ($request->category_id == 3) {
+            $storeRefId = Ticket::find($newTicket->id);
+            $storeRefId->reference_number = 'IR' . '-' . $newTicket->id;
+            $storeRefId->save();
+        } elseif ($request->category_id == 4) {
+            $storeRefId = Ticket::find($newTicket->id);
+            $storeRefId->reference_number = 'ET' . '-' . $newTicket->id;
+            $storeRefId->save();
+        } else {
+            $storeRefId = Ticket::find($newTicket->id);
+            $storeRefId->reference_number = 'OT' . '-' . $newTicket->id;
+            $storeRefId->save();
+        }
 
         return redirect()->route('ticket.create')->with('message', 'Ticket created successfully');
     }
