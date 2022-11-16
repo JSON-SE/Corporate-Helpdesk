@@ -24,7 +24,7 @@ class StoreTicketRequest extends FormRequest
     {
         return [
             'title' => 'required|min:10|max:30',
-            'content' => 'min:10|max:255',
+            'content' => 'max:255',
         ];
     }
 }

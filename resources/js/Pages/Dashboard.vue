@@ -250,9 +250,7 @@ const props = defineProps({
                                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
                                                         >
                                                             {{
-                                                                ticket
-                                                                    .categories
-                                                                    .category
+                                                                ticket.category
                                                             }}
                                                         </td>
                                                         <td
@@ -263,27 +261,12 @@ const props = defineProps({
                                                         <td
                                                             class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                                         >
-                                                            {{
-                                                                ticket.users
-                                                                    .firstName
-                                                            }}
-                                                            {{
-                                                                ticket.users
-                                                                    .middleName
-                                                            }}
-                                                            {{
-                                                                ticket.users
-                                                                    .lastName
-                                                            }}
+                                                            {{ ticket.user }}
                                                         </td>
                                                         <td
                                                             class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                                                         >
-                                                            {{
-                                                                ticket.users
-                                                                    .offices
-                                                                    .abbr
-                                                            }}
+                                                            {{ ticket.office }}
                                                         </td>
                                                         <td
                                                             class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
@@ -291,9 +274,8 @@ const props = defineProps({
                                                             <!-- open -->
                                                             <div
                                                                 v-if="
-                                                                    ticket
-                                                                        .statuses
-                                                                        .id == 1
+                                                                    ticket.status ==
+                                                                    'Open'
                                                                 "
                                                             >
                                                                 <span
@@ -304,9 +286,8 @@ const props = defineProps({
                                                             <!-- in-progress -->
                                                             <div
                                                                 v-else-if="
-                                                                    ticket
-                                                                        .statuses
-                                                                        .id == 2
+                                                                    ticket.status ==
+                                                                    'In-Progress'
                                                                 "
                                                             >
                                                                 <span
@@ -317,9 +298,8 @@ const props = defineProps({
                                                             <!-- Cancelled -->
                                                             <div
                                                                 v-else-if="
-                                                                    ticket
-                                                                        .statuses
-                                                                        .id == 3
+                                                                    ticket.status ==
+                                                                    'Cancelled'
                                                                 "
                                                             >
                                                                 <span
@@ -352,7 +332,7 @@ const props = defineProps({
                                                                     class="sr-only"
                                                                 >
                                                                     {{
-                                                                        ticket.name
+                                                                        ticket.id
                                                                     }}</span
                                                                 ></a
                                                             >
@@ -363,7 +343,7 @@ const props = defineProps({
                                                                     class="sr-only"
                                                                     >,
                                                                     {{
-                                                                        ticket.name
+                                                                        ticket.id
                                                                     }}</span
                                                                 ></a
                                                             >
