@@ -11,6 +11,11 @@ class Ticket extends Model
         'category_id', 'title', 'content',  'user_id', 'status_id', 'remarks'
     ];
 
+    public function getDiffForHumans()
+    {
+        return $this->created_at->diffForHumans();
+    }
+
     public function categories()
     {
         return $this->belongsTo(Category::class, 'category_id');

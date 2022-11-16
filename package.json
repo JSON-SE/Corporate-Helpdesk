@@ -23,6 +23,7 @@
         "@headlessui/vue": "^1.7.4",
         "@heroicons/vue": "^2.0.13",
         "@vue-hero-icons/outline": "^1.7.2",
-        "@vue-hero-icons/solid": "^1.7.2"
+        "@vue-hero-icons/solid": "^1.7.2",
+        "moment": "^2.29.4"
     }
 }

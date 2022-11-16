@@ -4,6 +4,7 @@ import Pagination from "@/Components/Pagination.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { PlusIcon } from "@heroicons/vue/20/solid";
 import { Link } from "@inertiajs/inertia-vue3";
+import { moment } from "moment";
 
 const props = defineProps({
     tickets: Object,
@@ -22,7 +23,6 @@ const props = defineProps({
                 Dashboard
             </h2>
         </template>
-
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -71,15 +71,33 @@ const props = defineProps({
                     <div v-else>
                         <div class="px-4 sm:px-6 lg:px-8 mt-6 pb-8">
                             <div class="sm:flex sm:items-center">
-                                <div class="mr-5 mt-6">
-                                    <Link
-                                        :href="route('ticket.create')"
-                                        type="button"
-                                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                                <!-- Search -->
+                                <div class="mr-5">
+                                    <label
+                                        for="search"
+                                        class="block text-sm font-medium text-gray-700"
+                                        >Quick search</label
                                     >
-                                        New Ticket
-                                    </Link>
+                                    <div
+                                        class="relative mt-1 flex items-center"
+                                    >
+                                        <input
+                                            type="text"
+                                            name="search"
+                                            id="search"
+                                            class="block w-full rounded-md border-gray-300 pr-12 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                        />
+                                        <div
+                                            class="absolute inset-y-0 right-0 flex py-1.5 pr-1.5"
+                                        >
+                                            <kbd
+                                                class="inline-flex items-center rounded border border-gray-200 px-2 font-sans text-sm font-medium text-gray-400"
+                                                >⌘K</kbd
+                                            >
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <!-- Category -->
                                 <div class="mr-5">
                                     <label
@@ -127,7 +145,7 @@ const props = defineProps({
                                     </select>
                                 </div>
                                 <!-- office -->
-                                <div>
+                                <div class="mr-5">
                                     <label
                                         for="office"
                                         class="block text-sm font-medium text-gray-700"
@@ -148,6 +166,15 @@ const props = defineProps({
                                             {{ office.office }}
                                         </option>
                                     </select>
+                                </div>
+                                <div class="mr-5 mt-6">
+                                    <Link
+                                        :href="route('ticket.create')"
+                                        type="button"
+                                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                                    >
+                                        New Ticket
+                                    </Link>
                                 </div>
                             </div>
                             <div class="mt-8 flex flex-col">
@@ -194,6 +221,12 @@ const props = defineProps({
                                                             class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                                                         >
                                                             Status
+                                                        </th>
+                                                        <th
+                                                            scope="col"
+                                                            class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                                        >
+                                                            Date
                                                         </th>
                                                         <th
                                                             scope="col"
@@ -303,6 +336,13 @@ const props = defineProps({
                                                             </div>
                                                         </td>
                                                         <td
+                                                            class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"
+                                                        >
+                                                            {{
+                                                                ticket.created_at
+                                                            }}
+                                                        </td>
+                                                        <td
                                                             class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
                                                         >
                                                             <a
@@ -310,7 +350,7 @@ const props = defineProps({
                                                                 class="text-indigo-600 hover:text-indigo-900 mx-4"
                                                                 >Edit<span
                                                                     class="sr-only"
-                                                                    >,
+                                                                >
                                                                     {{
                                                                         ticket.name
                                                                     }}</span
