@@ -38,7 +38,7 @@ class TicketController extends Controller
             'user_id' => Auth::id(),
             'status_id' => 1
         ]);
-        // Storing Reference number
+        // Updating Reference number
         if ($request->category_id == 1) {
             $storeRefId = Ticket::find($newTicket->id);
             $storeRefId->reference_number = 'HW' . '-' . $newTicket->id;

@@ -15,7 +15,10 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard', [
             'tickets' => Ticket::query()
             ->when(Request::input('search'), function ($query, $search) {
-                $query->where('title', 'like', "%{$search}%");
+                $query->where('reference_number', 'like', "%{$search}%");
+            })
+            ->when(Request::input('categoryFilter'), function ($query, $category) {
+                $query->where('category_id', 'like', "%{$category}%");
             })
             ->with('users', 'categories', 'statuses')
             ->paginate(10)
@@ -31,7 +34,7 @@ class DashboardController extends Controller
                 'status' => $ticket->statuses->status,
                 'created_at' => $ticket->created_at->diffForHumans()
             ]),
-            'filters' => Request::only(['search']),
+            'filters' => Request::only(['search', 'categoryFilter', 'statusFilter', 'officeFilter']),
             'offices' => Office::all(),
             'categories' => Category::all(),
             'status' => Status::all(),

@@ -2,7 +2,7 @@
 import { ref, watch } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
-import { PlusIcon } from "@heroicons/vue/20/solid";
+import { PlusIcon as PlusIconMini } from "@heroicons/vue/20/solid";
 import { Link } from "@inertiajs/inertia-vue3";
 import { moment } from "moment";
 import { Inertia } from "@inertiajs/inertia";
@@ -16,11 +16,13 @@ const props = defineProps({
 });
 
 let search = ref(props.filters.search);
+let categoryFilter = ref(props.filters.categoryFilter);
 watch(search, (value) => {
     Inertia.get(
         "/dashboard",
         {
             search: value,
+            categoryFilter: categoryFilter.value,
         },
         {
             preserveState: true,
@@ -28,6 +30,22 @@ watch(search, (value) => {
         }
     );
 });
+
+function getCategory() {
+    watch(categoryFilter, (value) => {
+        Inertia.get(
+            "/dashboard",
+            {
+                search: search.value,
+                categoryFilter: value,
+            },
+            {
+                preserveState: true,
+                replace: true,
+            }
+        );
+    });
+}
 </script>
 
 <template>
@@ -61,6 +79,7 @@ watch(search, (value) => {
                                             v-model="search"
                                             id="search"
                                             class="block w-full rounded-md border-gray-300 pr-12 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                            autofocus
                                         />
                                         <div
                                             class="absolute inset-y-0 right-0 flex py-1.5 pr-1.5"
@@ -81,16 +100,19 @@ watch(search, (value) => {
                                         >Category</label
                                     >
                                     <select
+                                        v-model="categoryFilter"
+                                        @change="getCategory"
                                         id="location"
                                         name="location"
                                         class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                     >
-                                        <option selected="">
+                                        <option selected="" value="">
                                             Select Category
                                         </option>
                                         <option
                                             v-for="category in categories"
                                             :key="category.id"
+                                            :value="category.id"
                                         >
                                             {{ category.category }}
                                         </option>
@@ -146,9 +168,12 @@ watch(search, (value) => {
                                     <Link
                                         :href="route('ticket.create')"
                                         type="button"
-                                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                                        class="inline-flex items-center rounded-full border border-transparent bg-blue-600 p-1 text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                                     >
-                                        New Ticket
+                                        <PlusIconMini
+                                            class="h-5 w-5"
+                                            aria-hidden="true"
+                                        />
                                     </Link>
                                 </div>
                             </div>
@@ -217,9 +242,7 @@ watch(search, (value) => {
                                                 <tbody
                                                     class="divide-y divide-gray-200 bg-white"
                                                 >
-                                                    <div class="flex">
-                                                        No Result
-                                                    </div>
+                                                    <!-- no result area  -->
                                                 </tbody>
                                             </table>
                                         </div>
@@ -292,6 +315,7 @@ watch(search, (value) => {
                                             v-model="search"
                                             id="search"
                                             class="block w-full rounded-md border-gray-300 pr-12 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                            autofocus
                                         />
                                         <div
                                             class="absolute inset-y-0 right-0 flex py-1.5 pr-1.5"
@@ -312,16 +336,19 @@ watch(search, (value) => {
                                         >Category</label
                                     >
                                     <select
+                                        v-model="categoryFilter"
+                                        @change="getCategory"
                                         id="location"
                                         name="location"
                                         class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                     >
-                                        <option selected="">
+                                        <option selected="" value="">
                                             Select Category
                                         </option>
                                         <option
                                             v-for="category in categories"
                                             :key="category.id"
+                                            :value="category.id"
                                         >
                                             {{ category.category }}
                                         </option>
@@ -377,9 +404,12 @@ watch(search, (value) => {
                                     <Link
                                         :href="route('ticket.create')"
                                         type="button"
-                                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                                        class="inline-flex items-center rounded-full border border-transparent bg-blue-600 p-1 text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                                     >
-                                        New Ticket
+                                        <PlusIconMini
+                                            class="h-5 w-5"
+                                            aria-hidden="true"
+                                        />
                                     </Link>
                                 </div>
                             </div>
