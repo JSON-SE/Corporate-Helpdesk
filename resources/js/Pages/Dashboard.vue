@@ -5,6 +5,8 @@ import { Head } from "@inertiajs/inertia-vue3";
 import {
     PlusIcon as PlusIconMini,
     ArrowPathIcon as ArrowPath,
+    ChevronLeftIcon,
+    ChevronRightIcon,
 } from "@heroicons/vue/20/solid";
 import { Link } from "@inertiajs/inertia-vue3";
 import { moment } from "moment";
@@ -411,7 +413,7 @@ function resetFilter() {
                         </div>
                         <!-- pagination -->
                         <nav
-                            class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
+                            class="mt-6 flex items-center justify-between mx-auto"
                             aria-label="Pagination"
                         >
                             <div class="hidden sm:block">
