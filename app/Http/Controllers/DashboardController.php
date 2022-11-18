@@ -18,13 +18,13 @@ class DashboardController extends Controller
                 $query->where('reference_number', 'like', "%{$search}%");
             })
             ->when(Request::input('categoryFilter'), function ($query, $category) {
-                $query->where('category_id', 'like', "%{$category}%");
+                $query->where('category_id', '=', $category);
             })
             ->when(Request::input('statusFilter'), function ($query, $statusFilter) {
-                $query->where('status_id', 'like', "%{$statusFilter}%");
+                $query->where('status_id', '=', $statusFilter);
             })
             ->when(Request::input('officeFilter'), function ($query, $officeFilter) {
-                $query->where('office_id', 'like', "%{$officeFilter}%");
+                $query->where('office_id', '=', $officeFilter);
             })
             ->with('users', 'categories', 'statuses')
             ->latest()
