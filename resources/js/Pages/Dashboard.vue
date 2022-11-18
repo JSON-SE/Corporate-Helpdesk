@@ -17,12 +17,16 @@ const props = defineProps({
 
 let search = ref(props.filters.search);
 let categoryFilter = ref(props.filters.categoryFilter);
+let statusFilter = ref(props.filters.statusFilter);
+let officeFilter = ref(props.filters.officeFilter);
 watch(search, (value) => {
     Inertia.get(
         "/dashboard",
         {
             search: value,
             categoryFilter: categoryFilter.value,
+            statusFilter: statusFilter.value,
+            officeFilter: officeFilter.value,
         },
         {
             preserveState: true,
@@ -38,6 +42,8 @@ function getCategory() {
             {
                 search: search.value,
                 categoryFilter: value,
+                statusFilter: statusFilter.value,
+                officeFilter: officeFilter.value,
             },
             {
                 preserveState: true,
@@ -45,6 +51,46 @@ function getCategory() {
             }
         );
     });
+}
+function getStatus() {
+    watch(statusFilter, (value) => {
+        Inertia.get(
+            "/dashboard",
+            {
+                search: search.value,
+                categoryFilter: categoryFilter.value,
+                statusFilter: value,
+                officeFilter: officeFilter.value,
+            },
+            {
+                preserveState: true,
+                replace: true,
+            }
+        );
+    });
+}
+function getOffice() {
+    watch(officeFilter, (value) => {
+        Inertia.get(
+            "/dashboard",
+            {
+                search: search.value,
+                categoryFilter: categoryFilter.value,
+                statusFilter: statusFilter.value,
+                officeFilter: value,
+            },
+            {
+                preserveState: true,
+                replace: true,
+            }
+        );
+    });
+}
+function resetFilter() {
+    search.value = "";
+    categoryFilter.value = "";
+    statusFilter.value = "";
+    officeFilter.value = "";
 }
 </script>
 
@@ -126,16 +172,19 @@ function getCategory() {
                                         >Status</label
                                     >
                                     <select
+                                        v-model="statusFilter"
+                                        @change="getStatus"
                                         id="location"
                                         name="location"
                                         class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                     >
-                                        <option selected="">
+                                        <option selected="" value="">
                                             Select Status
                                         </option>
                                         <option
                                             v-for="status in statuses"
                                             :key="status.id"
+                                            :value="status.id"
                                         >
                                             {{ status.status }}
                                         </option>
@@ -149,16 +198,19 @@ function getCategory() {
                                         >Office</label
                                     >
                                     <select
+                                        v-model="officeFilter"
+                                        @change="getOffice"
                                         id="location"
                                         name="location"
                                         class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                     >
-                                        <option selected="">
+                                        <option selected="" value="">
                                             Select Office
                                         </option>
                                         <option
                                             v-for="office in offices"
                                             :key="office.id"
+                                            :value="office.id"
                                         >
                                             {{ office.office }}
                                         </option>
@@ -167,6 +219,18 @@ function getCategory() {
                                 <div class="mr-5 mt-6">
                                     <Link
                                         :href="route('ticket.create')"
+                                        type="button"
+                                        class="inline-flex items-center rounded-full border border-transparent bg-blue-600 p-1 text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                    >
+                                        <PlusIconMini
+                                            class="h-5 w-5"
+                                            aria-hidden="true"
+                                        />
+                                    </Link>
+                                </div>
+                                <div class="mr-5 mt-6">
+                                    <Link
+                                        @click="resetFilter"
                                         type="button"
                                         class="inline-flex items-center rounded-full border border-transparent bg-blue-600 p-1 text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                                     >
@@ -362,16 +426,19 @@ function getCategory() {
                                         >Status</label
                                     >
                                     <select
+                                        v-model="statusFilter"
+                                        @change="getStatus"
                                         id="location"
                                         name="location"
                                         class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                     >
-                                        <option selected="">
+                                        <option selected="" value="">
                                             Select Status
                                         </option>
                                         <option
                                             v-for="status in statuses"
                                             :key="status.id"
+                                            :value="status.id"
                                         >
                                             {{ status.status }}
                                         </option>
@@ -385,16 +452,19 @@ function getCategory() {
                                         >Office</label
                                     >
                                     <select
+                                        v-model="officeFilter"
+                                        @change="getOffice"
                                         id="location"
                                         name="location"
                                         class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                     >
-                                        <option selected="">
+                                        <option selected="" value="">
                                             Select Office
                                         </option>
                                         <option
                                             v-for="office in offices"
                                             :key="office.id"
+                                            :value="office.id"
                                         >
                                             {{ office.office }}
                                         </option>
@@ -403,6 +473,18 @@ function getCategory() {
                                 <div class="mr-5 mt-6">
                                     <Link
                                         :href="route('ticket.create')"
+                                        type="button"
+                                        class="inline-flex items-center rounded-full border border-transparent bg-blue-600 p-1 text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                    >
+                                        <PlusIconMini
+                                            class="h-5 w-5"
+                                            aria-hidden="true"
+                                        />
+                                    </Link>
+                                </div>
+                                <div class="mr-5 mt-6">
+                                    <Link
+                                        @click="resetFilter"
                                         type="button"
                                         class="inline-flex items-center rounded-full border border-transparent bg-blue-600 p-1 text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                                     >

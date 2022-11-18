@@ -8,7 +8,7 @@ class Ticket extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'category_id', 'reference_number', 'title', 'content',  'user_id', 'status_id', 'remarks'
+        'category_id', 'reference_number', 'title', 'content',  'user_id', 'office_id', 'status_id', 'remarks'
     ];
 
     public function getDiffForHumans()
@@ -24,6 +24,11 @@ class Ticket extends Model
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function offices()
+    {
+        return $this->belongsTo(Office::class, 'office_id');
     }
 
     public function statuses()

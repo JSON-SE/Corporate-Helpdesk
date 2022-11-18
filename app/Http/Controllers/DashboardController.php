@@ -20,7 +20,14 @@ class DashboardController extends Controller
             ->when(Request::input('categoryFilter'), function ($query, $category) {
                 $query->where('category_id', 'like', "%{$category}%");
             })
+            ->when(Request::input('statusFilter'), function ($query, $statusFilter) {
+                $query->where('status_id', 'like', "%{$statusFilter}%");
+            })
+            ->when(Request::input('officeFilter'), function ($query, $officeFilter) {
+                $query->where('office_id', 'like', "%{$officeFilter}%");
+            })
             ->with('users', 'categories', 'statuses')
+            ->latest()
             ->paginate(10)
             ->withQueryString()
             ->through(fn ($ticket) => [
@@ -37,7 +44,7 @@ class DashboardController extends Controller
             'filters' => Request::only(['search', 'categoryFilter', 'statusFilter', 'officeFilter']),
             'offices' => Office::all(),
             'categories' => Category::all(),
-            'status' => Status::all(),
+            'statuses' => Status::all(),
         ]);
     }
 }

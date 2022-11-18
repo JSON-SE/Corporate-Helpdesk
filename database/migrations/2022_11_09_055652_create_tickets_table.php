@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('title');
             $table->string('content')->nullable();
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('office_id')->constrained();
             $table->foreignId('status_id')->constrained();
             $table->longText('remarks')->nullable();
             $table->timestamps();
