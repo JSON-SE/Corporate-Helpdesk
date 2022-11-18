@@ -2,7 +2,10 @@
 import { ref, watch } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/inertia-vue3";
-import { PlusIcon as PlusIconMini } from "@heroicons/vue/20/solid";
+import {
+    PlusIcon as PlusIconMini,
+    ArrowPathIcon as ArrowPath,
+} from "@heroicons/vue/20/solid";
 import { Link } from "@inertiajs/inertia-vue3";
 import { moment } from "moment";
 import { Inertia } from "@inertiajs/inertia";
@@ -216,7 +219,7 @@ function resetFilter() {
                                         </option>
                                     </select>
                                 </div>
-                                <div class="mr-5 mt-6">
+                                <div class="mr-2 mt-6">
                                     <Link
                                         :href="route('ticket.create')"
                                         type="button"
@@ -228,13 +231,13 @@ function resetFilter() {
                                         />
                                     </Link>
                                 </div>
-                                <div class="mr-5 mt-6">
+                                <div class="mt-6">
                                     <Link
                                         @click="resetFilter"
                                         type="button"
                                         class="inline-flex items-center rounded-full border border-transparent bg-blue-600 p-1 text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                                     >
-                                        <PlusIconMini
+                                        <ArrowPath
                                             class="h-5 w-5"
                                             aria-hidden="true"
                                         />
@@ -470,7 +473,7 @@ function resetFilter() {
                                         </option>
                                     </select>
                                 </div>
-                                <div class="mr-5 mt-6">
+                                <div class="mr-2 mt-6">
                                     <Link
                                         :href="route('ticket.create')"
                                         type="button"
@@ -482,13 +485,13 @@ function resetFilter() {
                                         />
                                     </Link>
                                 </div>
-                                <div class="mr-5 mt-6">
+                                <div class="mt-6">
                                     <Link
                                         @click="resetFilter"
                                         type="button"
                                         class="inline-flex items-center rounded-full border border-transparent bg-blue-600 p-1 text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                                     >
-                                        <PlusIconMini
+                                        <ArrowPath
                                             class="h-5 w-5"
                                             aria-hidden="true"
                                         />
