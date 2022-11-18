@@ -118,7 +118,7 @@ function resetFilter() {
                                 <label
                                     for="search"
                                     class="block text-sm font-medium text-gray-700"
-                                    >Quick search</label
+                                    >Ticket Search</label
                                 >
                                 <div class="relative mt-1 flex items-center">
                                     <input
