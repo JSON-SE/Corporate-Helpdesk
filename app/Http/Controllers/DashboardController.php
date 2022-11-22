@@ -6,6 +6,7 @@ use App\Models\Office;
 use App\Models\Status;
 use App\Models\Ticket;
 use App\Models\Category;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Request;
 
 class DashboardController extends Controller
@@ -39,7 +40,8 @@ class DashboardController extends Controller
                 'user' => $ticket->users->firstName . ' ' . $ticket->users->middleName . ' ' . $ticket->users->lastName,
                 'office' => $ticket->users->offices->abbr,
                 'status' => $ticket->statuses->status,
-                'created_at' => $ticket->created_at->diffForHumans()
+                'created_at' => $ticket->created_at->diffForHumans(),
+                'view_url' => URL::route('ticket.show', $ticket)
             ]),
             'filters' => Request::only(['search', 'categoryFilter', 'statusFilter', 'officeFilter']),
             'offices' => Office::all(),

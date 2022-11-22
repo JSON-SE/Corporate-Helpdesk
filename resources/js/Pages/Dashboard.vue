@@ -381,19 +381,10 @@ function resetFilter() {
                                                     <td
                                                         class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
                                                     >
-                                                        <a
-                                                            href="#"
-                                                            class="text-indigo-600 hover:text-indigo-900 mx-4"
-                                                            >Edit<span
-                                                                class="sr-only"
-                                                            >
-                                                                {{
-                                                                    ticket.id
-                                                                }}</span
-                                                            ></a
-                                                        >
-                                                        <a
-                                                            href="#"
+                                                        <Link
+                                                            :href="
+                                                                ticket.view_url
+                                                            "
                                                             class="text-indigo-600 hover:text-indigo-900"
                                                             >View<span
                                                                 class="sr-only"
@@ -401,7 +392,7 @@ function resetFilter() {
                                                                 {{
                                                                     ticket.id
                                                                 }}</span
-                                                            ></a
+                                                            ></Link
                                                         >
                                                     </td>
                                                 </tr>

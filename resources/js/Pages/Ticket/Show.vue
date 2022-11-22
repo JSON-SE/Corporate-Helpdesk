@@ -8,6 +8,10 @@ import InputLabel from "@/Components/InputLabel.vue";
 const props = defineProps({
     res: Object,
 });
+
+function back() {
+    window.history.back();
+}
 </script>
 
 <template>
@@ -21,7 +25,7 @@ const props = defineProps({
         </template>
 
         <div class="py-12">
-            <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow sm:rounded-lg">
                     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                         <div class="flex flex-row justify-center">
@@ -154,7 +158,7 @@ const props = defineProps({
                             >
                                 <Link
                                     class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                    :href="route('ticket.index')"
+                                    @click="back()"
                                     >Back</Link
                                 >
                             </div>
