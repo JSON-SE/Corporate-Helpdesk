@@ -19,8 +19,9 @@ class TicketController extends Controller
     {
         return Inertia::render('Ticket/Index', [
             'tickets' => Ticket::where('user_id', Auth::id())
-            ->when(Request::input('search'), function ($query, $search) {
-                $query->where('reference_number', 'like', "%{$search}%");
+            ->when(Request::input('search'), function ($query, $requestor) {
+                $query->where('requestor', 'like', "%{$requestor}%")
+                ->orWhere('reference_number', 'like', "%{$requestor}%");
             })
             ->when(Request::input('categoryFilter'), function ($query, $category) {
                 $query->where('category_id', '=', $category);
@@ -41,7 +42,7 @@ class TicketController extends Controller
                 'user' => $ticket->users->firstName . ' ' . $ticket->users->middleName . ' ' . $ticket->users->lastName,
                 'office' => $ticket->users->offices->abbr,
                 'status' => $ticket->statuses->status,
-                'created_at' => $ticket->created_at->diffForHumans(),
+                'created_at' => $ticket->created_at->toDayDateTimeString(),
                 'view_url' => URL::route('ticket.show', $ticket)
 
             ]),
