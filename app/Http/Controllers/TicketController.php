@@ -78,6 +78,7 @@ class TicketController extends Controller
             'title' => $request->title,
             'content' => $request->content,
             'user_id' => Auth::id(),
+            'requestor' => Auth::user()->firstName . ' ' . Auth::user()->middleName . ' ' . Auth::user()->lastName,
             'office_id' => auth()->user()->office_id,
             'status_id' => 1
         ]);
