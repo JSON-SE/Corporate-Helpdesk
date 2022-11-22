@@ -78,7 +78,10 @@ const show = ref(true);
                                         >
                                             Create Ticket
                                         </DropdownLink>
-                                        <DropdownLink href="#" as="button">
+                                        <DropdownLink
+                                            :href="route('ticket.index')"
+                                            as="button"
+                                        >
                                             My Tickets
                                         </DropdownLink>
                                     </template>
