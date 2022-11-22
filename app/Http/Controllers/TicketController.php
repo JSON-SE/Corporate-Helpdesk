@@ -1,11 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Models\Office;
 use App\Models\Status;
 use App\Models\Ticket;
 use App\Models\Category;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use App\Http\Requests\StoreTicketRequest;
@@ -39,7 +41,9 @@ class TicketController extends Controller
                 'user' => $ticket->users->firstName . ' ' . $ticket->users->middleName . ' ' . $ticket->users->lastName,
                 'office' => $ticket->users->offices->abbr,
                 'status' => $ticket->statuses->status,
-                'created_at' => $ticket->created_at->diffForHumans()
+                'created_at' => $ticket->created_at->diffForHumans(),
+                'view_url' => URL::route('ticket.show', $ticket)
+
             ]),
             'filters' => Request::only(['search', 'categoryFilter', 'statusFilter', 'officeFilter']),
             'offices' => Office::all(),
@@ -111,7 +115,19 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+        $dateParse = Carbon::parse($ticket->created_at);
+        $res = [
+            'user' => $ticket->users->firstName . ' ' . $ticket->users->middleName . ' ' . $ticket->users->lastName,
+            'office' => $ticket->offices->office,
+            'office_abbr' => $ticket->offices->abbr,
+            'reference_number' => $ticket->reference_number,
+            'title' => $ticket->title,
+            'content' => $ticket->content,
+            'status' => $ticket->statuses->status,
+            'remarks' => $ticket->remarks,
+            'created_at' => $dateParse->format('Y-m-d H:i:s')
+        ];
+        return Inertia::render('Ticket/Show', compact('res'));
     }
 
     /**

@@ -105,7 +105,7 @@ function resetFilter() {
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
+                My Tickets
             </h2>
         </template>
         <div class="py-12">
@@ -392,8 +392,10 @@ function resetFilter() {
                                                                 }}</span
                                                             ></a
                                                         >
-                                                        <a
-                                                            href="#"
+                                                        <Link
+                                                            :href="
+                                                                ticket.view_url
+                                                            "
                                                             class="text-indigo-600 hover:text-indigo-900"
                                                             >View<span
                                                                 class="sr-only"
@@ -401,7 +403,7 @@ function resetFilter() {
                                                                 {{
                                                                     ticket.id
                                                                 }}</span
-                                                            ></a
+                                                            ></Link
                                                         >
                                                     </td>
                                                 </tr>
