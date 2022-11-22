@@ -345,7 +345,7 @@ function resetFilter() {
                                                         <div
                                                             v-else-if="
                                                                 ticket.status ==
-                                                                'In-Progress'
+                                                                'In-progress'
                                                             "
                                                         >
                                                             <span
