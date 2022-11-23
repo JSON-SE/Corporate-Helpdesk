@@ -92,7 +92,11 @@ const show = ref(true);
                                 class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
                             >
                                 <!-- Settings Dropdown -->
-                                <Dropdown>
+                                <Dropdown
+                                    v-if="
+                                        $page.props.user.roles.includes('admin')
+                                    "
+                                >
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
                                             <button
@@ -119,14 +123,14 @@ const show = ref(true);
 
                                     <template #content>
                                         <DropdownLink href="#" as="button">
+                                            Ticket Management
+                                        </DropdownLink>
+                                        <DropdownLink href="#" as="button">
                                             User Management
                                         </DropdownLink>
-                                        <DropdownLink href="#" as="button">
-                                            Assign Staff
-                                        </DropdownLink>
-                                        <DropdownLink href="#" as="button">
+                                        <!-- <DropdownLink href="#" as="button">
                                             Category Management
-                                        </DropdownLink>
+                                        </DropdownLink> -->
                                         <DropdownLink href="#" as="button">
                                             Office Management
                                         </DropdownLink>
