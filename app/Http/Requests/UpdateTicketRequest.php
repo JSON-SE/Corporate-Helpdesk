@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -13,7 +12,7 @@ class UpdateTicketRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +23,8 @@ class UpdateTicketRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|min:10|max:30',
+            'content' => 'max:255',
         ];
     }
 }
