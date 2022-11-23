@@ -385,8 +385,26 @@ function resetFilter() {
                                                             :href="
                                                                 ticket.view_url
                                                             "
-                                                            class="text-indigo-600 hover:text-indigo-900"
+                                                            class="mr-2 text-indigo-600 hover:text-indigo-900"
                                                             >View<span
+                                                                class="sr-only"
+                                                                >,
+                                                                {{
+                                                                    ticket.id
+                                                                }}</span
+                                                            ></Link
+                                                        >
+                                                        <Link
+                                                            v-if="
+                                                                $page.props.user.permissions.includes(
+                                                                    'delete ticket'
+                                                                )
+                                                            "
+                                                            :href="
+                                                                ticket.destroy_url
+                                                            "
+                                                            class="text-red-600 hover:text-red-900"
+                                                            >Delete<span
                                                                 class="sr-only"
                                                                 >,
                                                                 {{

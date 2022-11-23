@@ -49,11 +49,12 @@ class RegisteredUserController extends Controller
             'middleName' => $request->middleName,
             'lastName' => $request->lastName,
             'initials' => $request->initials,
-            'role_id' => 1,
             'office_id' => $request->office_id,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        $user->assignRole('standard');
 
         event(new Registered($user));
 
