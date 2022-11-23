@@ -42,7 +42,8 @@ class DashboardController extends Controller
                 'office' => $ticket->users->offices->abbr,
                 'status' => $ticket->statuses->status,
                 'created_at' => $ticket->created_at->toDayDateTimeString(),
-                'view_url' => URL::route('ticket.show', $ticket)
+                'view_url' => URL::route('ticket.show', $ticket),
+                'destroy_url' => URL::route('ticket.destroy', $ticket)
             ]),
             'filters' => Request::only(['search', 'categoryFilter', 'statusFilter', 'officeFilter']),
             'offices' => Office::all(),
