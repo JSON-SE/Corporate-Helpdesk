@@ -43,7 +43,9 @@ class HandleInertiaRequests extends Middleware
                 ]);
             },
             'flash' => [
-                'message' => session('message'),
+                'ticketCreated' => session('ticketCreated'),
+                'ticketUpdated' => session('ticketUpdated'),
+                'ticketDestroyed' => session('ticketDestroyed'),
                 'registered' => session('registered'),
                 'loggedIn' => session('loggedIn')
             ],

@@ -97,6 +97,14 @@ function resetFilter() {
     statusFilter.value = "";
     officeFilter.value = "";
 }
+
+function destroy(id) {
+    if (confirm("Are you sure you want to delete?")) {
+        Inertia.delete(route("ticket.destroy", id));
+    } else {
+        console.log("cancelled");
+    }
+}
 </script>
 
 <template>
@@ -400,8 +408,10 @@ function resetFilter() {
                                                                     'delete ticket'
                                                                 )
                                                             "
-                                                            :href="
-                                                                ticket.destroy_url
+                                                            @click="
+                                                                destroy(
+                                                                    ticket.id
+                                                                )
                                                             "
                                                             class="text-red-600 hover:text-red-900"
                                                             >Delete<span

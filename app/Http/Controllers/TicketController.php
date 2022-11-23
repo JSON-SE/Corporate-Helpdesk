@@ -107,7 +107,7 @@ class TicketController extends Controller
             $storeRefId->save();
         }
 
-        return redirect()->route('ticket.create')->with('message', 'Ticket created successfully');
+        return redirect()->route('ticket.create')->with('ticketCreated', 'Ticket created successfully');
     }
 
     /**
@@ -155,6 +155,7 @@ class TicketController extends Controller
      */
     public function update(UpdateTicketRequest $request, Ticket $ticket)
     {
+        $ticket->title = $request->title;
         $ticket->content = $request->content;
         $ticket->category_id = $request->category_id;
         $ticket->save();
@@ -177,7 +178,7 @@ class TicketController extends Controller
             $ticket->save();
         }
 
-        return back()->with('message', 'Updated Successfully');
+        return back()->with('ticketUpdated', 'Ticket has been updated successfully');
     }
 
     /**
@@ -188,6 +189,7 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        //
+        $ticket->delete();
+        return back()->with('ticketDestroyed', 'Ticket has been deleted successfully');
     }
 }
