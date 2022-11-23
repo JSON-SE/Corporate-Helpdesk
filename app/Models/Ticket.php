@@ -35,4 +35,14 @@ class Ticket extends Model
     {
         return $this->belongsTo(Status::class, 'status_id');
     }
+
+    public function admin_ticket_management()
+    {
+        return $this->hasMany(AdminTicketManagement::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

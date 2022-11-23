@@ -55,4 +55,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Ticket::class);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function admin_ticket_management()
+    {
+        return $this->hasMany(AdminTicketManagement::class);
+    }
 }

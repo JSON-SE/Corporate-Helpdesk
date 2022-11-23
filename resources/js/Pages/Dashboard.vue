@@ -105,6 +105,14 @@ function destroy(id) {
         console.log("cancelled");
     }
 }
+
+function acceptTicket(id) {
+    if (confirm("Accept Ticket?")) {
+        Inertia.post(route("admin-ticket-management.accept", id));
+    } else {
+        console.log("cancelled");
+    }
+}
 </script>
 
 <template>
@@ -389,6 +397,28 @@ function destroy(id) {
                                                     <td
                                                         class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
                                                     >
+                                                        <Link
+                                                            v-if="
+                                                                ticket.status ==
+                                                                    'Open' &&
+                                                                $page.props.user
+                                                                    .roles ==
+                                                                    'admin'
+                                                            "
+                                                            @click="
+                                                                acceptTicket(
+                                                                    ticket.id
+                                                                )
+                                                            "
+                                                            class="mr-2 text-indigo-600 hover:text-indigo-900"
+                                                            >Accept<span
+                                                                class="sr-only"
+                                                                >,
+                                                                {{
+                                                                    ticket.id
+                                                                }}</span
+                                                            ></Link
+                                                        >
                                                         <Link
                                                             :href="
                                                                 ticket.view_url

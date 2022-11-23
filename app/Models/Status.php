@@ -15,4 +15,9 @@ class Status extends Model
     {
         return $this->hasOne(Ticket::class);
     }
+
+    public function admin_ticket_management()
+    {
+        return $this->hasMany(AdminTicketManagement::class);
+    }
 }
