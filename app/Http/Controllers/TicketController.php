@@ -43,7 +43,8 @@ class TicketController extends Controller
                 'office' => $ticket->users->offices->abbr,
                 'status' => $ticket->statuses->status,
                 'created_at' => $ticket->created_at->toDayDateTimeString(),
-                'view_url' => URL::route('ticket.show', $ticket)
+                'view_url' => URL::route('ticket.show', $ticket),
+                'edit_url' => URL::route('ticket.edit', $ticket)
 
             ]),
             'filters' => Request::only(['search', 'categoryFilter', 'statusFilter', 'officeFilter']),
@@ -86,19 +87,19 @@ class TicketController extends Controller
         // Updating Reference number
         if ($request->category_id == 1) {
             $storeRefId = Ticket::find($newTicket->id);
-            $storeRefId->reference_number = 'HW' . '-' . $newTicket->id;
+            $storeRefId->reference_number = 'HW' . '-' . $newTicket->id . '-' . Auth::id();
             $storeRefId->save();
         } elseif ($request->category_id == 2) {
             $storeRefId = Ticket::find($newTicket->id);
-            $storeRefId->reference_number = 'SW' . '-' . $newTicket->id;
+            $storeRefId->reference_number = 'SW' . '-' . $newTicket->id . '-' . Auth::id();
             $storeRefId->save();
         } elseif ($request->category_id == 3) {
             $storeRefId = Ticket::find($newTicket->id);
-            $storeRefId->reference_number = 'IR' . '-' . $newTicket->id;
+            $storeRefId->reference_number = 'IR' . '-' . $newTicket->id . '-' . Auth::id();
             $storeRefId->save();
         } elseif ($request->category_id == 4) {
             $storeRefId = Ticket::find($newTicket->id);
-            $storeRefId->reference_number = 'ET' . '-' . $newTicket->id;
+            $storeRefId->reference_number = 'ET' . '-' . $newTicket->id . '-' . Auth::id();
             $storeRefId->save();
         } else {
             $storeRefId = Ticket::find($newTicket->id);
@@ -140,7 +141,9 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        //
+        $res = $ticket;
+        $categories = Category::all();
+        return Inertia::render('Ticket/Edit', compact('res', 'categories'));
     }
 
     /**
@@ -152,7 +155,29 @@ class TicketController extends Controller
      */
     public function update(UpdateTicketRequest $request, Ticket $ticket)
     {
-        //
+        $ticket->content = $request->content;
+        $ticket->category_id = $request->category_id;
+        $ticket->save();
+
+        // Updating Reference number
+        if ($request->category_id == 1) {
+            $ticket->reference_number = 'HW' . '-' . $ticket->id . '-' . $ticket->user_id;
+            $ticket->save();
+        } elseif ($request->category_id == 2) {
+            $ticket->reference_number = 'SW' . '-' . $ticket->id . '-' . $ticket->user_id;
+            $ticket->save();
+        } elseif ($request->category_id == 3) {
+            $ticket->reference_number = 'IR' . '-' . $ticket->id . '-' . $ticket->user_id;
+            $ticket->save();
+        } elseif ($request->category_id == 4) {
+            $ticket->reference_number = 'ET' . '-' . $ticket->id . '-' . $ticket->user_id;
+            $ticket->save();
+        } else {
+            $ticket->reference_number = 'OT' . '-' . $ticket->id . '-' . $ticket->user_id;
+            $ticket->save();
+        }
+
+        return back()->with('message', 'Updated Successfully');
     }
 
     /**
