@@ -62,8 +62,11 @@ class TicketController extends Controller
     public function create()
     {
         // $user = Auth::user();
+        $offices = Office::all();
+        dd($offices);
+        $users = Office::all();
         $categories = Category::all();
-        return Inertia::render('Ticket/Create', compact('categories'));
+        return Inertia::render('Ticket/Create', compact('categories', 'offices', 'users'));
     }
 
     /**

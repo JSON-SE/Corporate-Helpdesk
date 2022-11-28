@@ -65,4 +65,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(AdminTicketManagement::class);
     }
+
+    public function user_tickets()
+    {
+        return $this->hasMany(UserTicket::class);
+    }
 }
