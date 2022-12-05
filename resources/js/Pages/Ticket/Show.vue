@@ -93,6 +93,22 @@ function back() {
                         </div>
                         <div class="sm:col-span-1">
                             <dt class="text-sm font-medium text-gray-500">
+                                Assigned to
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900">
+                                {{ res.assigned_user }}
+                            </dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500">
+                                Assigned office
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900">
+                                {{ res.assigned_office }}
+                            </dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500">
                                 Subject
                             </dt>
                             <dd class="mt-1 text-sm text-gray-900">

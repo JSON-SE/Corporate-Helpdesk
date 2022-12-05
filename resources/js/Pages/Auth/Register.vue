@@ -176,7 +176,7 @@ const submit = () => {
                                         v-for="office in offices"
                                         :value="office.id"
                                     >
-                                        {{ office.office }}
+                                        {{ office.abbr }} - {{ office.office }}
                                     </option>
                                 </select>
                                 <InputError

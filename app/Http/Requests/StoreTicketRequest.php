@@ -23,6 +23,9 @@ class StoreTicketRequest extends FormRequest
     public function rules()
     {
         return [
+            'user_id' => 'required',
+            'office_id' => 'required',
+            'category_id' => 'required',
             'title' => 'required|min:5|max:255',
             'content' => 'max:255',
         ];

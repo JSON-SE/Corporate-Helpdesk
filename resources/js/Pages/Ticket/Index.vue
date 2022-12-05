@@ -24,6 +24,7 @@ let search = ref(props.filters.search);
 let categoryFilter = ref(props.filters.categoryFilter);
 let statusFilter = ref(props.filters.statusFilter);
 let officeFilter = ref(props.filters.officeFilter);
+
 watch(search, (value) => {
     Inertia.get(
         "/ticket",
