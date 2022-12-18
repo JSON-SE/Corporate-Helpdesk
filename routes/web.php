@@ -33,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('management/index', 'Management/Index')->name('management.index');
     Route::resource('admin-ticket-management', AdminTicketManagementController::class);
     Route::post('admin-ticket-management/accept/{id}', [AdminTicketManagementController::class, 'accept'])->name('admin-ticket-management.accept');
+    Route::resource('task', AdminTicketManagementController::class);
 });
 
 require __DIR__ . '/auth.php';

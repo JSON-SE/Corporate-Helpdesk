@@ -119,7 +119,7 @@ const show = ref(true);
 
                                     <template #content>
                                         <DropdownLink
-                                            :href="route('ticket.create')"
+                                            :href="route('task.index')"
                                             as="button"
                                         >
                                             Tasks

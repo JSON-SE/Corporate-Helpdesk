@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserTicket::class);
     }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
 }

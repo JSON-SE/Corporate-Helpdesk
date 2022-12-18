@@ -26,7 +26,7 @@ let statusFilter = ref(props.filters.statusFilter);
 let officeFilter = ref(props.filters.officeFilter);
 watch(search, (value) => {
     Inertia.get(
-        "/dashboard",
+        "/task",
         {
             search: value,
             categoryFilter: categoryFilter.value,
@@ -43,7 +43,7 @@ watch(search, (value) => {
 function getCategory() {
     watch(categoryFilter, (value) => {
         Inertia.get(
-            "/dashboard",
+            "/task",
             {
                 search: search.value,
                 categoryFilter: value,
@@ -60,7 +60,7 @@ function getCategory() {
 function getStatus() {
     watch(statusFilter, (value) => {
         Inertia.get(
-            "/dashboard",
+            "/task",
             {
                 search: search.value,
                 categoryFilter: categoryFilter.value,
@@ -77,7 +77,7 @@ function getStatus() {
 function getOffice() {
     watch(officeFilter, (value) => {
         Inertia.get(
-            "/dashboard",
+            "/task",
             {
                 search: search.value,
                 categoryFilter: categoryFilter.value,
@@ -398,11 +398,50 @@ function acceptTicket(id) {
                                                         class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"
                                                     >
                                                         <Link
+                                                            v-if="
+                                                                ticket.status ==
+                                                                'Open'
+                                                            "
+                                                            @click="
+                                                                acceptTicket(
+                                                                    ticket.id
+                                                                )
+                                                            "
+                                                            class="mr-2 text-indigo-600 hover:text-indigo-900"
+                                                            >Accept<span
+                                                                class="sr-only"
+                                                                >,
+                                                                {{
+                                                                    ticket.id
+                                                                }}</span
+                                                            ></Link
+                                                        >
+                                                        <Link
                                                             :href="
                                                                 ticket.view_url
                                                             "
                                                             class="mr-2 text-indigo-600 hover:text-indigo-900"
                                                             >View<span
+                                                                class="sr-only"
+                                                                >,
+                                                                {{
+                                                                    ticket.id
+                                                                }}</span
+                                                            ></Link
+                                                        >
+                                                        <Link
+                                                            v-if="
+                                                                $page.props.user.permissions.includes(
+                                                                    'delete ticket'
+                                                                )
+                                                            "
+                                                            @click="
+                                                                destroy(
+                                                                    ticket.id
+                                                                )
+                                                            "
+                                                            class="text-red-600 hover:text-red-900"
+                                                            >Delete<span
                                                                 class="sr-only"
                                                                 >,
                                                                 {{
