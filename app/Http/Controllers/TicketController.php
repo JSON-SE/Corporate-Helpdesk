@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Office;
 use App\Models\Status;
 use App\Models\Ticket;
+use App\Models\Activity;
 use App\Models\Category;
 use App\Models\UserTicket;
 use Illuminate\Support\Facades\URL;
@@ -121,6 +122,21 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request)
     {
+        // Query the category id based on the category id input
+        $query = Category::where('id', $request->category_id)->first();
+        $input = $query->category;
+
+        // Split the input into an array of words
+        $words = explode(' ', $input);
+
+        // Extract the first letter of each word
+        $letters = array_map(function ($word) {
+            return substr($word, 0, 1);
+        }, $words);
+
+        // Join the array of letters into a single string
+        $reference_number = implode('', $letters) . '-' . Auth::id();
+
         // dd('store is triggered');
         $newTicket = Ticket::create([
             'category_id' => $request->category_id,
@@ -131,33 +147,26 @@ class TicketController extends Controller
             'office_id' => $request->office_id,
             'status_id' => 1
         ]);
-        // Updating Reference number
-        if ($request->category_id == 1) {
-            $storeRefId = Ticket::find($newTicket->id);
-            $storeRefId->reference_number = 'HW' . '-' . $newTicket->id . '-' . Auth::id();
-            $storeRefId->save();
-        } elseif ($request->category_id == 2) {
-            $storeRefId = Ticket::find($newTicket->id);
-            $storeRefId->reference_number = 'SW' . '-' . $newTicket->id . '-' . Auth::id();
-            $storeRefId->save();
-        } elseif ($request->category_id == 3) {
-            $storeRefId = Ticket::find($newTicket->id);
-            $storeRefId->reference_number = 'IR' . '-' . $newTicket->id . '-' . Auth::id();
-            $storeRefId->save();
-        } elseif ($request->category_id == 4) {
-            $storeRefId = Ticket::find($newTicket->id);
-            $storeRefId->reference_number = 'ET' . '-' . $newTicket->id . '-' . Auth::id();
-            $storeRefId->save();
-        } else {
-            $storeRefId = Ticket::find($newTicket->id);
-            $storeRefId->reference_number = 'OT' . '-' . $newTicket->id;
-            $storeRefId->save();
-        }
+
+        // update reference number
+        $updateTicket = Ticket::find($newTicket->id);
+        $updateTicket->update([
+            'reference_number' => $newTicket->id . '-' . $reference_number
+        ]);
+        $updateTicket->save();
 
         // Storing User id & Ticket id
         $userTicket = UserTicket::create([
             'user_id' => Auth::id(),
             'ticket_id' => $newTicket->id
+        ]);
+
+        // Activity Store Comment
+        $activity = Activity::create([
+            'ticket_id' => $newTicket->id,
+            'user_id' => Auth::id(),
+            'activity_type_id' => 1, // comment type
+            'comment' => $request->content
         ]);
 
         return redirect()->route('ticket.create')->with('ticketCreated', 'Ticket created successfully');

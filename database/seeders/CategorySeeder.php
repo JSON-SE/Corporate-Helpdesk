@@ -15,19 +15,28 @@ class CategorySeeder extends Seeder
     {
         DB::table('categories')->insert([
             [
-                'category' => 'Hardware',
+                'category' => 'Technical Support',
             ],
             [
-                'category' => 'Software',
+                'category' => 'Complaints',
             ],
             [
-                'category' => 'Internet Request'
+                'category' => 'Question and Inquiries',
             ],
             [
-                'category' => 'Email/Telephone'
+                'category' => 'Events and Activities'
             ],
             [
-                'category' => 'Others'
+                'category' => 'Service Requests'
+            ],
+            [
+                'category' => 'Emergency Services'
+            ],
+            [
+                'category' => 'Administrative Task'
+            ],
+            [
+                'category' => 'Tracking Inquiries'
             ]
         ]);
     }
