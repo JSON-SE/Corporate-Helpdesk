@@ -147,6 +147,7 @@ class AdminTicketManagementController extends Controller
         Activity::create([
             'ticket_id' => $id,
             'user_id' => Auth::id(),
+            'activity_type_id' => 2, // assignment
             'comment' => 'has accepted your request.'
         ]);
 

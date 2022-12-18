@@ -195,7 +195,21 @@ class TicketController extends Controller
             'remarks' => $ticket->remarks,
             'created_at' => $dateParse->format('Y-m-d H:i:s')
         ];
-        return Inertia::render('Ticket/Show', compact('res'));
+
+        $activities = Activity::with('users', 'tickets', 'activity_types')->where('ticket_id', $ticket->id)->orderBy('created_at', 'desc')->get();
+        $currentTime = Carbon::now();
+
+        $mappedActivities = $activities->map(function ($activity) {
+            return [
+                'user' => $activity->users->firstName . ' ' . $activity->users->lastName,
+                'imageUrl' => 'https://images.unsplash.com/photo-1520785643438-5bf77931f493?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
+                'type' => $activity->activity_types->type,
+                'comment' => $activity->comment,
+                'date' => $activity->created_at->diffForHumans(),
+            ];
+        });
+        // dd($mappedActivities);
+        return Inertia::render('Ticket/Show', compact('res', 'mappedActivities'));
     }
 
     /**

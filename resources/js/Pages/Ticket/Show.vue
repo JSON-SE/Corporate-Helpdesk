@@ -27,6 +27,7 @@ import {
 
 const props = defineProps({
     res: Object,
+    mappedActivities: Object,
 });
 
 function back() {
@@ -214,7 +215,7 @@ const activity = [
                                         {{ res.created_at }}
                                     </dd>
                                 </div>
-                                <div class="sm:col-span-2">
+                                <!-- <div class="sm:col-span-2">
                                     <dt
                                         class="text-sm font-medium text-gray-500"
                                     >
@@ -223,7 +224,7 @@ const activity = [
                                     <dd class="mt-1 text-sm text-gray-900">
                                         {{ res.content }}
                                     </dd>
-                                </div>
+                                </div> -->
                                 <div class="sm:col-span-1">
                                     <dt
                                         class="text-sm font-medium text-gray-500"
@@ -262,7 +263,7 @@ const activity = [
                             <h3
                                 class="text-lg font-medium leading-6 text-gray-900"
                             >
-                                Status
+                                Feeds
                             </h3>
                             <p class="mt-1 max-w-2xl text-sm text-gray-500">
                                 Stay informed: Get updates on the status of your
@@ -330,12 +331,12 @@ const activity = [
                                 </div>
                             </div>
                             <!-- End Add Comment -->
-                            <div class="flow-root">
+                            <div class="flow-root mt-10">
                                 <ul role="list" class="-mb-8">
                                     <li
                                         v-for="(
                                             activityItem, activityItemIdx
-                                        ) in activity"
+                                        ) in mappedActivities"
                                         :key="activityItem.id"
                                     >
                                         <div class="relative pb-8">
@@ -380,16 +381,9 @@ const activity = [
                                                                 class="text-sm"
                                                             >
                                                                 <a
-                                                                    :href="
-                                                                        activityItem
-                                                                            .person
-                                                                            .href
-                                                                    "
                                                                     class="font-medium text-gray-900"
                                                                     >{{
-                                                                        activityItem
-                                                                            .person
-                                                                            .name
+                                                                        activityItem.user
                                                                     }}</a
                                                                 >
                                                             </div>
@@ -441,35 +435,18 @@ const activity = [
                                                             class="text-sm text-gray-500"
                                                         >
                                                             <a
-                                                                :href="
-                                                                    activityItem
-                                                                        .person
-                                                                        .href
+                                                                href="
+                                                                    #
                                                                 "
                                                                 class="font-medium text-gray-900"
                                                                 >{{
-                                                                    activityItem
-                                                                        .person
-                                                                        .name
+                                                                    activityItem.user
                                                                 }}</a
                                                             >
                                                             {{ " " }}
-                                                            assigned
-                                                            {{ " " }}
-                                                            <a
-                                                                :href="
-                                                                    activityItem
-                                                                        .assigned
-                                                                        .href
-                                                                "
-                                                                class="font-medium text-gray-900"
-                                                                >{{
-                                                                    activityItem
-                                                                        .assigned
-                                                                        .name
-                                                                }}</a
-                                                            >
-                                                            {{ " " }}
+                                                            {{
+                                                                activityItem.comment
+                                                            }}
                                                             <span
                                                                 class="whitespace-nowrap"
                                                                 >{{
