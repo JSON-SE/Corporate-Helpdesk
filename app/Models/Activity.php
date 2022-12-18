@@ -11,7 +11,8 @@ class Activity extends Model
     protected $fillable = [
         'ticket_id',
         'user_id',
-        'activity'
+        'activity_type_id',
+        'comment'
     ];
 
     public function tickets()
@@ -22,5 +23,10 @@ class Activity extends Model
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function activity_types()
+    {
+        return $this->belongsTo(ActivityType::class, 'activity_type_id');
     }
 }

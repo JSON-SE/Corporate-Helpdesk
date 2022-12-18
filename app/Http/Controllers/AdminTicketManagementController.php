@@ -143,11 +143,11 @@ class AdminTicketManagementController extends Controller
             'user_id' => Auth::id(),
             'status_id' => 2 // In-progress
         ]);
-
+        // Record Activity Comment
         Activity::create([
             'ticket_id' => $id,
             'user_id' => Auth::id(),
-            'activity' => 'has accepted your request.'
+            'comment' => 'has accepted your request.'
         ]);
 
         return back()->with('ticketAccepted', 'ticket has been accepted');
