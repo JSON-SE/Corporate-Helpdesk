@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -13,7 +12,7 @@ class StoreActivityRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +23,7 @@ class StoreActivityRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'comment' => 'required'
         ];
     }
 }

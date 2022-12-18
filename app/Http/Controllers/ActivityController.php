@@ -1,10 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\Ticket;
+use App\Models\Activity;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
-use App\Models\Activity;
 
 class ActivityController extends Controller
 {
@@ -36,7 +37,15 @@ class ActivityController extends Controller
      */
     public function store(StoreActivityRequest $request)
     {
-        //
+        $ticket = Ticket::where('id', $request->id)->first();
+        $newActivity = Activity::create([
+            'ticket_id' => $request->id,
+            'user_id' => Auth::id(),
+            'activity_type_id' => 1, // comment
+            'comment' => $request->comment
+        ]);
+
+        return back()->with('commentPosted', 'Comment has been posted');
     }
 
     /**

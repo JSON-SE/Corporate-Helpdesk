@@ -5,6 +5,7 @@ import { Head, useForm, Link } from "@inertiajs/inertia-vue3";
 import InputError from "@/Components/InputError.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
+import { Inertia } from "@inertiajs/inertia";
 import {
     FaceFrownIcon,
     FaceSmileIcon,
@@ -30,49 +31,22 @@ const props = defineProps({
     mappedActivities: Object,
 });
 
+const form = useForm({
+    id: props.res.id,
+    comment: "",
+    fileUpload: [],
+    terms: false,
+});
+
+const submit = () => {
+    form.post(route("comment.store", props.res.id), {
+        onFinish: () => form.reset("comment"),
+    });
+};
+
 function back() {
     window.history.back();
 }
-
-const activity = [
-    {
-        id: 1,
-        type: "comment",
-        person: { name: "Eduardo Benz", href: "#" },
-        imageUrl:
-            "https://images.unsplash.com/photo-1520785643438-5bf77931f493?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80",
-        comment:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tincidunt nunc ipsum tempor purus vitae id. Morbi in vestibulum nec varius. Et diam cursus quis sed purus nam. ",
-        date: "6d ago",
-    },
-    {
-        id: 2,
-        type: "assignment",
-        person: { name: "Hilary Mahy", href: "#" },
-        assigned: { name: "Kristin Watson", href: "#" },
-        date: "2d ago",
-    },
-    {
-        id: 3,
-        type: "tags",
-        person: { name: "Hilary Mahy", href: "#" },
-        tags: [
-            { name: "Bug", href: "#", color: "bg-rose-500" },
-            { name: "Accessibility", href: "#", color: "bg-indigo-500" },
-        ],
-        date: "6h ago",
-    },
-    {
-        id: 4,
-        type: "comment",
-        person: { name: "Jason Meyers", href: "#" },
-        imageUrl:
-            "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80",
-        comment:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tincidunt nunc ipsum tempor purus vitae id. Morbi in vestibulum nec varius. Et diam cursus quis sed purus nam. Scelerisque amet elit non sit ut tincidunt condimentum. Nisl ultrices eu venenatis diam.",
-        date: "2h ago",
-    },
-];
 </script>
 
 <template>
@@ -271,6 +245,10 @@ const activity = [
                             </p>
                         </div>
                         <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+                            <inputerror
+                                class="mt-2"
+                                :message="form.errors.comment"
+                            />
                             <!-- Add Comment -->
                             <div class="flex items-start space-x-4 mb-5">
                                 <div class="flex-shrink-0">
@@ -281,7 +259,10 @@ const activity = [
                                     />
                                 </div>
                                 <div class="min-w-0 flex-1">
-                                    <form action="#" class="relative">
+                                    <form
+                                        @submit.prevent="submit"
+                                        class="relative"
+                                    >
                                         <div
                                             class="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500"
                                         >
@@ -290,7 +271,7 @@ const activity = [
                                             >
                                             <textarea
                                                 rows="3"
-                                                name="comment"
+                                                v-model="form.comment"
                                                 id="comment"
                                                 class="block w-full resize-none border-0 py-3 focus:ring-0 sm:text-sm"
                                                 placeholder="Add your comment..."
@@ -313,6 +294,9 @@ const activity = [
                                         >
                                             <div class="flex items-center">
                                                 <input
+                                                    v-on:change="
+                                                        form.fileUpload
+                                                    "
                                                     type="file"
                                                     class="py-2 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
                                                     multiple
@@ -343,7 +327,7 @@ const activity = [
                                             <span
                                                 v-if="
                                                     activityItemIdx !==
-                                                    activity.length - 1
+                                                    mappedActivities.length - 1
                                                 "
                                                 class="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200"
                                                 aria-hidden="true"
@@ -358,14 +342,27 @@ const activity = [
                                                     "
                                                 >
                                                     <div class="relative">
-                                                        <img
+                                                        <!-- <img
                                                             class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400 ring-8 ring-white"
                                                             :src="
                                                                 activityItem.imageUrl
                                                             "
                                                             alt=""
-                                                        />
-
+                                                        /> -->
+                                                        <div>
+                                                            <div
+                                                                class="relative px-1"
+                                                            >
+                                                                <div
+                                                                    class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white"
+                                                                >
+                                                                    <UserCircleIcon
+                                                                        class="h-5 w-5 text-gray-500"
+                                                                        aria-hidden="true"
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <span
                                                             class="absolute -bottom-0.5 -right-1 rounded-tl bg-white px-0.5 py-px"
                                                         >

@@ -47,6 +47,7 @@ class HandleInertiaRequests extends Middleware
                 'ticketUpdated' => session('ticketUpdated'),
                 'ticketDestroyed' => session('ticketDestroyed'),
                 'ticketAccepted' => session('ticketAccepted'),
+                'commentPosted' => session('commentPosted'),
                 'registered' => session('registered'),
                 'loggedIn' => session('loggedIn')
             ],

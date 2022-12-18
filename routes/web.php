@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminTicketManagementController;
 
@@ -34,6 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('admin-ticket-management', AdminTicketManagementController::class);
     Route::post('admin-ticket-management/accept/{id}', [AdminTicketManagementController::class, 'accept'])->name('admin-ticket-management.accept');
     Route::resource('task', AdminTicketManagementController::class);
+    Route::post('comment/store/{id}', [ActivityController::class, 'store'])->name('comment.store');
 });
 
 require __DIR__ . '/auth.php';
