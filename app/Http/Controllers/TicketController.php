@@ -131,7 +131,8 @@ class TicketController extends Controller
 
         // Extract the first letter of each word
         $letters = array_map(function ($word) {
-            return substr($word, 0, 1);
+            $toUpperCase = ucwords($word);
+            return substr($toUpperCase, 0, 1);
         }, $words);
 
         // Join the array of letters into a single string
@@ -241,22 +242,6 @@ class TicketController extends Controller
         $ticket->save();
 
         // Updating Reference number
-        if ($request->category_id == 1) {
-            $ticket->reference_number = 'HW' . '-' . $ticket->id . '-' . $ticket->user_id;
-            $ticket->save();
-        } elseif ($request->category_id == 2) {
-            $ticket->reference_number = 'SW' . '-' . $ticket->id . '-' . $ticket->user_id;
-            $ticket->save();
-        } elseif ($request->category_id == 3) {
-            $ticket->reference_number = 'IR' . '-' . $ticket->id . '-' . $ticket->user_id;
-            $ticket->save();
-        } elseif ($request->category_id == 4) {
-            $ticket->reference_number = 'ET' . '-' . $ticket->id . '-' . $ticket->user_id;
-            $ticket->save();
-        } else {
-            $ticket->reference_number = 'OT' . '-' . $ticket->id . '-' . $ticket->user_id;
-            $ticket->save();
-        }
 
         return back()->with('ticketUpdated', 'Ticket has been updated successfully');
     }

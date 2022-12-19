@@ -252,11 +252,23 @@ function back() {
                             <!-- Add Comment -->
                             <div class="flex items-start space-x-4 mb-5">
                                 <div class="flex-shrink-0">
-                                    <img
+                                    <!-- <img
                                         class="inline-block h-10 w-10 rounded-full"
                                         src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                         alt=""
-                                    />
+                                    /> -->
+                                    <div>
+                                        <div class="relative px-1">
+                                            <div
+                                                class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white"
+                                            >
+                                                <UserCircleIcon
+                                                    class="h-7 w-7 text-gray-500"
+                                                    aria-hidden="true"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <form
@@ -357,7 +369,7 @@ function back() {
                                                                     class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white"
                                                                 >
                                                                     <UserCircleIcon
-                                                                        class="h-5 w-5 text-gray-500"
+                                                                        class="h-7 w-7 text-gray-500"
                                                                         aria-hidden="true"
                                                                     />
                                                                 </div>
