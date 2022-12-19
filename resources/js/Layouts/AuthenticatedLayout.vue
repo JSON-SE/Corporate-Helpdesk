@@ -22,11 +22,13 @@ const show = ref(true);
 const open = ref(false);
 
 
+function showTicket(id){
+    Inertia.get(route("show.ticket", id));
+}
+
 function removeNotification(id){
-    
     confirm("Are you sure to remove this notification?");
     Inertia.put(route("notified.close", id));
-    
 }
 </script>
 
@@ -491,12 +493,14 @@ function removeNotification(id){
                                                                         tabindex="0"
                                                                         class="focus:outline-none text-sm leading-none"
                                                                     >
-                                                                        <span
+                                                                         <div role="button"
+                                                                         @click="showTicket(item.id)"><span
                                                                             class="text-indigo-700"
                                                                             >{{
                                                                                 item.sender_name
                                                                             }}</span
-                                                                        >
+                                                                        ></div>
+                                                                        
                                                                         <div v-if="item.type === 1">
                                                                             commented on your ticket
                                                                         </div>
@@ -506,10 +510,13 @@ function removeNotification(id){
                                                                         <div v-else-if="item.type === 4">
                                                                             has assigned you on a ticket
                                                                         </div>
-                                                                        <span
+                                                                        <div role="button"
+                                                                         @click="showTicket(item.id)">
+                                                                         <span
                                                                             class="text-indigo-700"
                                                                             >{{ item.reference_number }}</span
-                                                                        >
+                                                                        ></div>
+                                                                        
                                                                     </p>
                                                                     <button
                                                                         tabindex="0"
