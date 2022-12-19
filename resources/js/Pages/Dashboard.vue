@@ -350,13 +350,13 @@ function acceptTicket(id) {
                                                         scope="col"
                                                         class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                                                     >
-                                                        User
+                                                        Issuer
                                                     </th>
                                                     <th
                                                         scope="col"
                                                         class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                                                     >
-                                                        Office
+                                                        Assigned Office
                                                     </th>
                                                     <th
                                                         scope="col"
