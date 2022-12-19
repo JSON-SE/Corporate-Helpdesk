@@ -21,7 +21,7 @@ class ActivityTypeSeeder extends Seeder
                 'type' => 'assignment',
             ],
             [
-                'type' => 'Attachment'
+                'type' => 'attachment'
             ],
             [
                 'type' => 'Tags'
