@@ -31,6 +31,7 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('ticket', TicketController::class);
+    Route::put('ticket/close/{id}', [TicketController::class, 'closeTicket'])->name('ticket.close');
     Route::inertia('management/index', 'Management/Index')->name('management.index');
     Route::resource('admin-ticket-management', AdminTicketManagementController::class);
     Route::post('admin-ticket-management/accept/{id}', [AdminTicketManagementController::class, 'accept'])->name('admin-ticket-management.accept');

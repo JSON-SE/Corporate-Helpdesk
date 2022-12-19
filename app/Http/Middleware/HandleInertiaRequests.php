@@ -45,6 +45,8 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'ticketCreated' => session('ticketCreated'),
                 'ticketUpdated' => session('ticketUpdated'),
+                'ticketCancelled' => session('ticketCancelled'),
+                'ticketClosed' => session('ticketClosed'),
                 'ticketDestroyed' => session('ticketDestroyed'),
                 'ticketAccepted' => session('ticketAccepted'),
                 'commentPosted' => session('commentPosted'),

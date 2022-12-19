@@ -32,6 +32,7 @@ const props = defineProps({
 });
 
 const form = useForm({
+    setStatus: "",
     id: props.res.id,
     comment: "",
     fileUpload: [],
@@ -46,6 +47,16 @@ const submit = () => {
 
 function back() {
     window.history.back();
+}
+
+function setStatus() {
+    if (form.setStatus === "complete") {
+        confirm("Are you sure to complete and close the ticket?");
+        form.put(route("ticket.close", props.res.id));
+    } else if (form.setStatus === "cancel") {
+        confirm("Are you sure to cancel and close the ticket?");
+        form.put(route("ticket.close", props.res.id));
+    }
 }
 </script>
 
@@ -249,6 +260,38 @@ function back() {
                                 class="mt-2"
                                 :message="form.errors.comment"
                             />
+                            <!-- if ticket user id is equal to current user -->
+                            <div
+                                class="mb-5"
+                                v-if="
+                                    $page.props.auth.user.id ==
+                                    props.res.user_id
+                                "
+                            >
+                                <label
+                                    for="setStatus"
+                                    class="block text-sm font-medium text-gray-700"
+                                    >Status</label
+                                >
+                                <select
+                                    id="setStatus"
+                                    v-model="form.setStatus"
+                                    class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                    @change="setStatus()"
+                                >
+                                    <option selected="">Select Status</option>
+                                    <option value="complete">
+                                        Complete and close ticket
+                                    </option>
+                                    <option value="cancel">
+                                        Cancel and close ticket
+                                    </option>
+                                </select>
+                                <small class="text-gray-500"
+                                    >Comment will be disabled once you set
+                                    status to "close" or "cancel".</small
+                                >
+                            </div>
                             <!-- Add Comment -->
                             <div class="flex items-start space-x-4 mb-5">
                                 <div class="flex-shrink-0">

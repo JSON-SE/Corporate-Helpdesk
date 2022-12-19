@@ -186,6 +186,7 @@ class TicketController extends Controller
         $res = [
             'id' => $ticket->id,
             'user' => $ticket->requestor,
+            'user_id' => $ticket->user_id,
             'assigned_user' => $ticket->users->firstName . ' ' . $ticket->users->middleName . ' ' . $ticket->users->lastName,
             'assigned_office' => $ticket->users->offices->office,
             'office' => $userTicket->users->offices->office,
@@ -256,5 +257,40 @@ class TicketController extends Controller
     {
         $ticket->delete();
         return back()->with('ticketDestroyed', 'Ticket has been deleted successfully');
+    }
+
+    public function closeTicket(Request $request, $id)
+    {
+        $status = Request::input('setStatus');
+        $query = Ticket::where('id', $id)->first();
+
+        if ($status === 'cancel') {
+            $query->status_id = 3; //cancel
+            $query->save();
+
+            // Activity Store Comment
+            $activity = Activity::create([
+                'ticket_id' => $id,
+                'user_id' => Auth::id(),
+                'activity_type_id' => 2, // assignment type
+                'comment' => 'has cancelled the ticket.'
+            ]);
+        } else {
+            $query->status_id = 4; //complete
+            $query->save();
+
+            // Activity Store Comment
+            $activity = Activity::create([
+                'ticket_id' => $id,
+                'user_id' => Auth::id(),
+                'activity_type_id' => 2, // assignment type
+                'comment' => 'has successfully closed the ticket.'
+            ]);
+        }
+
+        if ($status === 'cancel') {
+            return back()->with('ticketCancelled', 'Ticket has been cancelled.');
+        }
+        return back()->with('ticketClosed', 'Ticket has been closed successfully');
     }
 }
