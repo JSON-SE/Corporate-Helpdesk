@@ -202,14 +202,30 @@ const open = ref(false);
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <!-- Settings Dropdown -->
-                            <button
-                                @click="open = !open"
-                                type="button"
-                                class="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            >
-                                <span class="sr-only">View notifications</span>
-                                <BellIcon class="h-6 w-6" aria-hidden="true" />
-                            </button>
+                            <div class="relative inline-block pr-2 mr-4">
+                                <button
+                                    @click="open = !open"
+                                    type="button"
+                                    class="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                >
+                                    <span class="sr-only"
+                                        >View notifications</span
+                                    >
+                                    <BellIcon
+                                        class="h-6 w-6"
+                                        aria-hidden="true"
+                                    />
+                                    <span
+                                        class="absolute inset-0 object-right-top -mr-6"
+                                    >
+                                        <div
+                                            class="inline-flex items-center px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-red-500 text-white"
+                                        >
+                                            6
+                                        </div>
+                                    </span>
+                                </button>
+                            </div>
                             <div class="ml-1 relative">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
