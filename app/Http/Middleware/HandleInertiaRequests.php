@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Middleware;
 
-use Illuminate\Http\Request;
 use Inertia\Middleware;
+use App\Models\Activity;
 use Tightenco\Ziggy\Ziggy;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -33,6 +35,13 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
+        $notificationCounter = Activity::with('tickets', 'users')
+        ->whereHas('tickets', function ($query) {
+            $query->where('user_id', Auth::id());
+        })
+        ->where('status', 'unread')
+        ->count();
+
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
@@ -53,6 +62,7 @@ class HandleInertiaRequests extends Middleware
                 'registered' => session('registered'),
                 'loggedIn' => session('loggedIn')
             ],
+            'notification_counter' => $notificationCounter,
             'user.roles' => $request->user() ? $request->user()->roles->pluck('name') : [],
             'user.permissions' => $request->user() ? $request->user()->getPermissionsViaRoles()->pluck('name') : []
         ]);

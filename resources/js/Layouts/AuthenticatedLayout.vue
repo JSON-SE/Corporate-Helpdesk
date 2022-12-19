@@ -215,15 +215,22 @@ const open = ref(false);
                                         class="h-6 w-6"
                                         aria-hidden="true"
                                     />
-                                    <span
-                                        class="absolute inset-0 object-right-top -mr-6"
+                                    <div
+                                        v-if="$page.props.notification_counter"
                                     >
-                                        <div
-                                            class="inline-flex items-center px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-red-500 text-white"
+                                        <span
+                                            class="absolute inset-0 object-right-top -mr-6"
                                         >
-                                            6
-                                        </div>
-                                    </span>
+                                            <div
+                                                class="inline-flex items-center px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-red-500 text-white"
+                                            >
+                                                {{
+                                                    $page.props
+                                                        .notification_counter
+                                                }}
+                                            </div>
+                                        </span>
+                                    </div>
                                 </button>
                             </div>
                             <div class="ml-1 relative">

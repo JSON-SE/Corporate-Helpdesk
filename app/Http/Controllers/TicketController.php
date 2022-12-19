@@ -167,6 +167,7 @@ class TicketController extends Controller
             'ticket_id' => $newTicket->id,
             'user_id' => Auth::id(),
             'activity_type_id' => 1, // comment type
+            'status' => 'unread',
             'comment' => $request->content
         ]);
 

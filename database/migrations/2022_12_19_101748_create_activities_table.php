@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->foreignId('ticket_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('activity_type_id')->constrained()->onDelete('cascade');
+            $table->enum('status', ['unread', 'read', 'deleted'])->default('unread');
             $table->longText('comment');
             $table->timestamps();
         });

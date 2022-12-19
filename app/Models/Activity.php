@@ -12,6 +12,7 @@ class Activity extends Model
         'ticket_id',
         'user_id',
         'activity_type_id',
+        'statuås',
         'comment'
     ];
 
