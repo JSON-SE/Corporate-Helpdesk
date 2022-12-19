@@ -182,11 +182,13 @@ class TicketController extends Controller
     public function show(Ticket $ticket)
     {
         $userTicket = UserTicket::where('id', $ticket->id)->first();
+        $issuer = $userTicket->user_id;
         $dateParse = Carbon::parse($ticket->created_at);
         $res = [
             'id' => $ticket->id,
             'user' => $ticket->requestor,
             'user_id' => $ticket->user_id,
+            'issuer' => $issuer,
             'assigned_user' => $ticket->users->firstName . ' ' . $ticket->users->middleName . ' ' . $ticket->users->lastName,
             'assigned_office' => $ticket->users->offices->office,
             'office' => $userTicket->users->offices->office,

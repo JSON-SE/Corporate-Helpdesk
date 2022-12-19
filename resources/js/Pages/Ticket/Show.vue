@@ -261,112 +261,135 @@ function setStatus() {
                                 :message="form.errors.comment"
                             />
                             <!-- if ticket user id is equal to current user -->
+                            <!-- debug -->
+                            <!-- current user {{ $page.props.auth.user.id }} -
+                            assigned to {{ props.res.user_id }} - issuer -
+                            {{ props.res.issuer }} -->
+                            <!-- end debug -->
                             <div
                                 class="mb-5"
                                 v-if="
-                                    $page.props.auth.user.id ==
+                                    $page.props.auth.user.id ===
                                     props.res.user_id
                                 "
                             >
-                                <label
-                                    for="setStatus"
-                                    class="block text-sm font-medium text-gray-700"
-                                    >Status</label
-                                >
-                                <select
-                                    id="setStatus"
-                                    v-model="form.setStatus"
-                                    class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                    @change="setStatus()"
-                                >
-                                    <option selected="">Select Status</option>
-                                    <option value="complete">
-                                        Complete and close ticket
-                                    </option>
-                                    <option value="cancel">
-                                        Cancel and close ticket
-                                    </option>
-                                </select>
-                                <small class="text-gray-500"
-                                    >Comment will be disabled once you set
-                                    status to "close" or "cancel".</small
-                                >
+                                <div v-if="props.res.status === 'In-progress'">
+                                    <label
+                                        for="setStatus"
+                                        class="block text-sm font-medium text-gray-700"
+                                        >Status</label
+                                    >
+                                    <select
+                                        id="setStatus"
+                                        v-model="form.setStatus"
+                                        class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                        @change="setStatus()"
+                                    >
+                                        <option selected="">
+                                            Select Status
+                                        </option>
+                                        <option value="complete">
+                                            Complete and close ticket
+                                        </option>
+                                        <option value="cancel">
+                                            Cancel and close ticket
+                                        </option>
+                                    </select>
+                                    <small class="text-gray-500"
+                                        >Comment will be disabled once you set
+                                        status to "close" or "cancel".</small
+                                    >
+                                </div>
                             </div>
                             <!-- Add Comment -->
-                            <div class="flex items-start space-x-4 mb-5">
-                                <div class="flex-shrink-0">
-                                    <!-- <img
+                            <div
+                                v-if="
+                                    $page.props.auth.user.id ===
+                                        props.res.user_id ||
+                                    props.res.issuer ===
+                                        $page.props.auth.user.id
+                                "
+                            >
+                                <div
+                                    class="flex items-start space-x-4 mb-5"
+                                    v-if="props.res.status === 'In-progress'"
+                                >
+                                    <div class="flex-shrink-0">
+                                        <!-- <img
                                         class="inline-block h-10 w-10 rounded-full"
                                         src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                         alt=""
                                     /> -->
-                                    <div>
-                                        <div class="relative px-1">
-                                            <div
-                                                class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white"
-                                            >
-                                                <UserCircleIcon
-                                                    class="h-7 w-7 text-gray-500"
-                                                    aria-hidden="true"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="min-w-0 flex-1">
-                                    <form
-                                        @submit.prevent="submit"
-                                        class="relative"
-                                    >
-                                        <div
-                                            class="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500"
-                                        >
-                                            <label for="comment" class="sr-only"
-                                                >Add your comment</label
-                                            >
-                                            <textarea
-                                                rows="3"
-                                                v-model="form.comment"
-                                                id="comment"
-                                                class="block w-full resize-none border-0 py-3 focus:ring-0 sm:text-sm"
-                                                placeholder="Add your comment..."
-                                            />
-
-                                            <!-- Spacer element to match the height of the toolbar -->
-                                            <div
-                                                class="py-2"
-                                                aria-hidden="true"
-                                            >
-                                                <!-- Matches height of button in toolbar (1px border + 36px content height) -->
-                                                <div class="py-px">
-                                                    <div class="h-9" />
+                                        <div>
+                                            <div class="relative px-1">
+                                                <div
+                                                    class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white"
+                                                >
+                                                    <UserCircleIcon
+                                                        class="h-7 w-7 text-gray-500"
+                                                        aria-hidden="true"
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div
-                                            class="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2"
+                                    </div>
+                                    <div class="min-w-0 flex-1">
+                                        <form
+                                            @submit.prevent="submit"
+                                            class="relative"
                                         >
-                                            <div class="flex items-center">
-                                                <input
-                                                    v-on:change="
-                                                        form.fileUpload
-                                                    "
-                                                    type="file"
-                                                    class="py-2 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
-                                                    multiple
-                                                />
-                                            </div>
-                                            <div class="flex-shrink-0">
-                                                <button
-                                                    type="submit"
-                                                    class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                            <div
+                                                class="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500"
+                                            >
+                                                <label
+                                                    for="comment"
+                                                    class="sr-only"
+                                                    >Add your comment</label
                                                 >
-                                                    Post
-                                                </button>
+                                                <textarea
+                                                    rows="3"
+                                                    v-model="form.comment"
+                                                    id="comment"
+                                                    class="block w-full resize-none border-0 py-3 focus:ring-0 sm:text-sm"
+                                                    placeholder="Add your comment..."
+                                                />
+
+                                                <!-- Spacer element to match the height of the toolbar -->
+                                                <div
+                                                    class="py-2"
+                                                    aria-hidden="true"
+                                                >
+                                                    <!-- Matches height of button in toolbar (1px border + 36px content height) -->
+                                                    <div class="py-px">
+                                                        <div class="h-9" />
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </form>
+
+                                            <div
+                                                class="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2"
+                                            >
+                                                <div class="flex items-center">
+                                                    <input
+                                                        v-on:change="
+                                                            form.fileUpload
+                                                        "
+                                                        type="file"
+                                                        class="py-2 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+                                                        multiple
+                                                    />
+                                                </div>
+                                                <div class="flex-shrink-0">
+                                                    <button
+                                                        type="submit"
+                                                        class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                                    >
+                                                        Post
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                             <!-- End Add Comment -->
