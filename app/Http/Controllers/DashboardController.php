@@ -40,6 +40,7 @@ class DashboardController extends Controller
         // Return the current weekly count, percentage change, and total ticket count
         return [
             'name' => 'Weekly Generated Tickets',
+            'sub_name' => "Previous weeks's total count",
             'stat' => $current_weekly_count,
             'previousStat' => $previous_weekly_count,
             'change' => $percentage_change,
@@ -75,6 +76,7 @@ class DashboardController extends Controller
         // Return the current weekly count, percentage change, and total ticket count
         return [
             'name' => 'Monthly Generated Tickets',
+            'sub_name' => "Previous month's total count",
             'stat' => $current_monthly_count,
             'previousStat' => $previous_monthly_count,
             'change' => $percentage_change,
@@ -112,6 +114,7 @@ class DashboardController extends Controller
         // Return the current weekly count, percentage change, and total ticket count
         return [
             'name' => 'Yearly Generated Tickets',
+            'sub_name' => 'From the previous months total count',
             'stat' => $current_yearly_count,
             'previousStat' => $previous_yearly_count,
             'change' => $percentage_change,

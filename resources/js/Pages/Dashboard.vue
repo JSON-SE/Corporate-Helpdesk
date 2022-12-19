@@ -132,7 +132,7 @@ function acceptTicket(id) {
                 <!-- Ticket counter -->
                 <div class="mb-5">
                     <h3 class="text-lg font-medium leading-6 text-gray-900">
-                        Last 30 days
+                        Summary
                     </h3>
                     <dl
                         class="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-3 md:divide-y-0 md:divide-x"
@@ -154,7 +154,10 @@ function acceptTicket(id) {
                                     {{ item.stat }}
                                     <span
                                         class="ml-2 text-sm font-medium text-gray-500"
-                                        >from {{ item.previousStat }}</span
+                                        >from {{ item.previousStat }} -
+                                        <small
+                                            >({{ item.sub_name }})</small
+                                        ></span
                                     >
                                 </div>
 
