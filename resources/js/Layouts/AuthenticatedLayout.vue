@@ -5,7 +5,8 @@ import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link, useForm } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
 import {
     Dialog,
     DialogPanel,
@@ -19,6 +20,14 @@ import { BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 const showingNavigationDropdown = ref(false);
 const show = ref(true);
 const open = ref(false);
+
+
+function removeNotification(id){
+    
+    confirm("Are you sure to remove this notification?");
+    Inertia.put(route("notified.close", id));
+    
+}
 </script>
 
 <template>
@@ -502,10 +511,11 @@ const open = ref(false);
                                                                             >{{ item.reference_number }}</span
                                                                         >
                                                                     </p>
-                                                                    <div
+                                                                    <button
                                                                         tabindex="0"
                                                                         aria-label="close icon"
-                                                                        role="button"
+                                                                        @click="removeNotification(item.id)"
+                                                                        type="button"
                                                                         class="focus:outline-none cursor-pointer"
                                                                     >
                                                                         <svg
@@ -530,7 +540,7 @@ const open = ref(false);
                                                                                 stroke-linejoin="round"
                                                                             />
                                                                         </svg>
-                                                                    </div>
+                                                                    </button>
                                                                 </div>
                                                                 <p
                                                                     tabindex="0"

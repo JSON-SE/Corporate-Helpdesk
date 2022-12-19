@@ -37,6 +37,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('admin-ticket-management/accept/{id}', [AdminTicketManagementController::class, 'accept'])->name('admin-ticket-management.accept');
     Route::resource('task', AdminTicketManagementController::class);
     Route::post('comment/store/{id}', [ActivityController::class, 'store'])->name('comment.store');
+    Route::put('notified/{id}', [ActivityController::class, 'notified'])->name('notified.close');
 });
 
 require __DIR__ . '/auth.php';

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ticket;
 use App\Models\Activity;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
@@ -115,5 +116,14 @@ class ActivityController extends Controller
     public function destroy(Activity $activity)
     {
         //
+    }
+
+    public function notified(Request $request, $id)
+    {
+        $activity = Activity::where('id', $id)->first();
+        $activity->status = 'read';
+        $activity->save();
+
+        return back();
     }
 }
