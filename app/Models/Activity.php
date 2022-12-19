@@ -10,9 +10,10 @@ class Activity extends Model
 
     protected $fillable = [
         'ticket_id',
-        'user_id',
+        'sender_id',
+        'receiver_id',
         'activity_type_id',
-        'statuås',
+        'status',
         'comment'
     ];
 
@@ -21,9 +22,14 @@ class Activity extends Model
         return $this->belongsTo(Ticket::class, 'ticket_id');
     }
 
-    public function users()
+    public function sender()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'sender_id');
+    }
+
+    public function receiver()
+    {
+        return $this->belongsTo(User::class, 'receiver_id');
     }
 
     public function activity_types()

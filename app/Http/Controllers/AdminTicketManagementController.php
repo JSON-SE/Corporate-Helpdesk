@@ -133,6 +133,8 @@ class AdminTicketManagementController extends Controller
     public function accept(AcceptTicketRequest $request, $id)
     {
         $ticket = Ticket::where('id', $id)->first();
+        $activitySender = Activity::where('ticket_id', $id)->first();
+        // dd($activitySender);
         // Update Ticket Model Status to "In-progress"
         $ticket->status_id = 2; // In-progress
         $ticket->save();
@@ -146,7 +148,9 @@ class AdminTicketManagementController extends Controller
         // Record Activity Comment
         Activity::create([
             'ticket_id' => $id,
-            'user_id' => Auth::id(),
+            'sender_id' => Auth::id(),
+            // sender should receiver a notification that assigned user accepts the request
+            'receiver_id' => $activitySender->sender_id,
             'activity_type_id' => 2, // assignment
             'comment' => 'has accepted your request.'
         ]);

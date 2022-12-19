@@ -406,7 +406,7 @@ const open = ref(false);
                                             class="pointer-events-auto w-screen max-w-md"
                                         >
                                             <div
-                                                class="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl"
+                                                class="flex h-full flex-col overflow-y-scroll bg-gray-50 py-6 shadow-xl"
                                             >
                                                 <div class="px-4 sm:px-6">
                                                     <div
@@ -414,15 +414,14 @@ const open = ref(false);
                                                     >
                                                         <DialogTitle
                                                             class="text-lg font-medium text-gray-900"
-                                                            >Panel
-                                                            title</DialogTitle
+                                                            >Notifications</DialogTitle
                                                         >
                                                         <div
                                                             class="ml-3 flex h-7 items-center"
                                                         >
                                                             <button
                                                                 type="button"
-                                                                class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                                                class="rounded-md bg-grey-50 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                                                 @click="
                                                                     open = false
                                                                 "
@@ -444,13 +443,103 @@ const open = ref(false);
                                                     class="relative mt-6 flex-1 px-4 sm:px-6"
                                                 >
                                                     <!-- Replace with your content -->
+
                                                     <div
-                                                        class="absolute inset-0 px-4 sm:px-6"
+                                                        v-for="item in $page
+                                                            .props
+                                                            .notifications"
+                                                        :key="item.id"
                                                     >
                                                         <div
-                                                            class="h-full border-2 border-dashed border-gray-200"
-                                                            aria-hidden="true"
-                                                        />
+                                                            class="w-full p-3 mt-4 bg-white rounded shadow flex flex-shrink-0"
+                                                        >
+                                                            <div
+                                                                tabindex="0"
+                                                                aria-label="post icon"
+                                                                role="img"
+                                                                class="focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex items-center justify-center"
+                                                            >
+                                                                <svg
+                                                                    width="16"
+                                                                    height="16"
+                                                                    viewBox="0 0 16 16"
+                                                                    fill="none"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                >
+                                                                    <path
+                                                                        d="M4.30325 12.6667L1.33325 15V2.66667C1.33325 2.48986 1.40349 2.32029 1.52851 2.19526C1.65354 2.07024 1.82311 2 1.99992 2H13.9999C14.1767 2 14.3463 2.07024 14.4713 2.19526C14.5963 2.32029 14.6666 2.48986 14.6666 2.66667V12C14.6666 12.1768 14.5963 12.3464 14.4713 12.4714C14.3463 12.5964 14.1767 12.6667 13.9999 12.6667H4.30325ZM5.33325 6.66667V8H10.6666V6.66667H5.33325Z"
+                                                                        fill="#4338CA"
+                                                                    />
+                                                                </svg>
+                                                            </div>
+                                                            <div
+                                                                class="pl-3 w-full"
+                                                            >
+                                                                <div
+                                                                    class="flex items-center justify-between w-full"
+                                                                >
+                                                                    <p
+                                                                        tabindex="0"
+                                                                        class="focus:outline-none text-sm leading-none"
+                                                                    >
+                                                                        <span
+                                                                            class="text-indigo-700"
+                                                                            >{{
+                                                                                item.sender_name
+                                                                            }}</span
+                                                                        >
+                                                                        <div v-if="item.type === 1">
+                                                                            commented on your ticket
+                                                                        </div>
+                                                                        <div v-else-if="item.type === 2">
+                                                                            {{ item.comment }}
+                                                                        </div>
+                                                                        <div v-else-if="item.type === 4">
+                                                                            has assigned you on a ticket
+                                                                        </div>
+                                                                        <span
+                                                                            class="text-indigo-700"
+                                                                            >{{ item.reference_number }}</span
+                                                                        >
+                                                                    </p>
+                                                                    <div
+                                                                        tabindex="0"
+                                                                        aria-label="close icon"
+                                                                        role="button"
+                                                                        class="focus:outline-none cursor-pointer"
+                                                                    >
+                                                                        <svg
+                                                                            width="14"
+                                                                            height="14"
+                                                                            viewBox="0 0 14 14"
+                                                                            fill="none"
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                        >
+                                                                            <path
+                                                                                d="M10.5 3.5L3.5 10.5"
+                                                                                stroke="#4B5563"
+                                                                                stroke-width="1.25"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                            />
+                                                                            <path
+                                                                                d="M3.5 3.5L10.5 10.5"
+                                                                                stroke="#4B5563"
+                                                                                stroke-width="1.25"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                            />
+                                                                        </svg>
+                                                                    </div>
+                                                                </div>
+                                                                <p
+                                                                    tabindex="0"
+                                                                    class="focus:outline-none text-xs leading-3 pt-1 text-gray-500"
+                                                                >
+                                                                   {{ item.date }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <!-- /End replace -->
                                                 </div>

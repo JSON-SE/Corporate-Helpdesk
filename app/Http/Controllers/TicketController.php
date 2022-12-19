@@ -165,8 +165,9 @@ class TicketController extends Controller
         // Activity Store Comment
         $activity = Activity::create([
             'ticket_id' => $newTicket->id,
-            'user_id' => Auth::id(),
-            'activity_type_id' => 1, // comment type
+            'sender_id' => Auth::id(),
+            'receiver_id' => $newTicket->user_id,
+            'activity_type_id' => 4, // tag type
             'status' => 'unread',
             'comment' => $request->content
         ]);
@@ -195,6 +196,7 @@ class TicketController extends Controller
             'office' => $userTicket->users->offices->office,
             'office_abbr' => $ticket->offices->abbr,
             'reference_number' => $ticket->reference_number,
+            'category' => $ticket->categories->category,
             'title' => $ticket->title,
             'content' => $ticket->content,
             'status' => $ticket->statuses->status,
@@ -202,12 +204,12 @@ class TicketController extends Controller
             'created_at' => $dateParse->format('Y-m-d H:i:s')
         ];
 
-        $activities = Activity::with('users', 'tickets', 'activity_types')->where('ticket_id', $ticket->id)->orderBy('created_at', 'desc')->get();
+        $activities = Activity::with('sender', 'receiver', 'tickets', 'activity_types')->where('ticket_id', $ticket->id)->orderBy('created_at', 'desc')->get();
         $currentTime = Carbon::now();
 
         $mappedActivities = $activities->map(function ($activity) {
             return [
-                'user' => $activity->users->firstName . ' ' . $activity->users->lastName,
+                'user' => $activity->sender->firstName . ' ' . $activity->sender->lastName,
                 'imageUrl' => 'https://images.unsplash.com/photo-1520785643438-5bf77931f493?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
                 'type' => $activity->activity_types->type,
                 'comment' => $activity->comment,
@@ -266,6 +268,7 @@ class TicketController extends Controller
     {
         $status = Request::input('setStatus');
         $query = Ticket::where('id', $id)->first();
+        $activitySender = Activity::where('ticket_id', $id)->first();
 
         if ($status === 'cancel') {
             $query->status_id = 3; //cancel
@@ -274,7 +277,9 @@ class TicketController extends Controller
             // Activity Store Comment
             $activity = Activity::create([
                 'ticket_id' => $id,
-                'user_id' => Auth::id(),
+                'sender_id' => Auth::id(),
+                // sender should receiver a notification that assigned user cancelled the request
+                'receiver_id' => $activitySender->sender_id,
                 'activity_type_id' => 2, // assignment type
                 'comment' => 'has cancelled the ticket.'
             ]);
@@ -285,7 +290,9 @@ class TicketController extends Controller
             // Activity Store Comment
             $activity = Activity::create([
                 'ticket_id' => $id,
-                'user_id' => Auth::id(),
+                'sender_id' => Auth::id(),
+                // sender should receiver a notification that assigned user closed the request
+                'receiver_id' => $activitySender->sender_id,
                 'activity_type_id' => 2, // assignment type
                 'comment' => 'has successfully closed the ticket.'
             ]);

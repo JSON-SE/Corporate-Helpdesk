@@ -35,12 +35,34 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-        $notificationCounter = Activity::with('tickets', 'users')
-        ->whereHas('tickets', function ($query) {
-            $query->where('user_id', Auth::id());
-        })
+        $notificationCounter = Activity::with('tickets', 'sender', 'receiver')
+        // ->whereHas('tickets', function ($query) {
+        //     $query->where('user_id', Auth::id());
+        // })
+        ->where('receiver_id', Auth::id())
         ->where('status', 'unread')
         ->count();
+        $notifications = Activity::with('tickets', 'sender', 'receiver')
+        ->where('receiver_id', Auth::id())
+        ->where('status', 'unread')
+        ->orderBy('created_at', 'desc')
+        ->get();
+        // dd($notifications);
+        $filteredNotifications = $notifications->map(function ($notification) {
+            return [
+                'id' => $notification->id,
+                'sender_id' => $notification->sender_id,
+                'receiver_id' => $notification->receiver_id,
+                'sender_name' => $notification->sender->firstName . ' ' . $notification->sender->middleName . ' ' . $notification->sender->lastName,
+                'ticket_id' => $notification->ticket_id,
+                'reference_number' => $notification->tickets->reference_number,
+                'type' => $notification->activity_type_id,
+                'comment' => $notification->comment,
+                'date' => $notification->created_at->diffForHumans()
+            ];
+        });
+
+        // dd($filteredNotifications);
 
         return array_merge(parent::share($request), [
             'auth' => [
@@ -63,6 +85,7 @@ class HandleInertiaRequests extends Middleware
                 'loggedIn' => session('loggedIn')
             ],
             'notification_counter' => $notificationCounter,
+            'notifications' => $filteredNotifications,
             'user.roles' => $request->user() ? $request->user()->roles->pluck('name') : [],
             'user.permissions' => $request->user() ? $request->user()->getPermissionsViaRoles()->pluck('name') : []
         ]);

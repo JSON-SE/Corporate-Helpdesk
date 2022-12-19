@@ -37,15 +37,39 @@ class ActivityController extends Controller
      */
     public function store(StoreActivityRequest $request)
     {
+        // BUG in the code. receiver id must be fixed based on whos commenting.
+        /**
+         * FIXME:
+         * 1. BUG in the code. receiver id must be fixed based on whos commenting.
+         * TODO:
+         * 1. create a query where auth id is equal to ticket sender id? then use acitivty sender id ????? not sure
+         *
+        */
         $ticket = Ticket::where('id', $request->id)->first();
-        $newActivity = Activity::create([
-            'ticket_id' => $request->id,
-            'user_id' => Auth::id(),
-            'activity_type_id' => 1, // comment
-            'comment' => $request->comment
-        ]);
-
-        return back()->with('commentPosted', 'Comment has been posted');
+        $activitySender = Activity::where('ticket_id', $request->id)->first();
+        if ($ticket->user_id === Auth::id()) {
+        //    assigned user is commenting ...
+            $newActivity = Activity::create([
+                'ticket_id' => $request->id,
+                'sender_id' => Auth::id(),
+                // sender should receiver a comment notification
+                'receiver_id' => $activitySender->sender_id,
+                'activity_type_id' => 1, // comment
+                'comment' => $request->comment
+            ]);
+            return back()->with('commentPosted', 'Comment has been posted');
+        } else {
+            // issuer is commenting
+            $newActivity = Activity::create([
+                'ticket_id' => $request->id,
+                'sender_id' => Auth::id(),
+                // sender should receiver a comment notification
+                'receiver_id' => $ticket->user_id,
+                'activity_type_id' => 1, // comment
+                'comment' => $request->comment
+            ]);
+            return back()->with('commentPosted', 'Comment has been posted');
+        }
     }
 
     /**
