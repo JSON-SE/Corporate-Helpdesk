@@ -11,7 +11,8 @@ import {
     ArrowUpIcon,
 } from "@heroicons/vue/20/solid";
 import { Link } from "@inertiajs/inertia-vue3";
-import { moment } from "moment";
+// import { moment } from "moment";
+import * as moment from "moment";
 import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({
