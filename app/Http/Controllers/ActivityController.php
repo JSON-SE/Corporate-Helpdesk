@@ -158,4 +158,16 @@ class ActivityController extends Controller
 
         return back();
     }
+
+    public function notifiedClearAll(Request $request, $id)
+    {
+        $query = Activity::where('receiver_id', $id)->where('status', 'unread')->get();
+        foreach ($query as $item) {
+            // update all item to read where status is unread
+            $item->status = 'read';
+            $item->save();
+        }
+
+        return back();
+    }
 }

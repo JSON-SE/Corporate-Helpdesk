@@ -137,6 +137,8 @@ class AdminTicketManagementController extends Controller
         // dd($activitySender);
         // Update Ticket Model Status to "In-progress"
         $ticket->status_id = 2; // In-progress
+        $activitySender->status = 'read';
+        $activitySender->save();
         $ticket->save();
         // Record the ff. to admin_ticket_management_table
         // ticket_id, user_id -> auth->user()->id, status_id -> "In-progress"
@@ -152,9 +154,33 @@ class AdminTicketManagementController extends Controller
             // sender should receiver a notification that assigned user accepts the request
             'receiver_id' => $activitySender->sender_id,
             'activity_type_id' => 2, // assignment
-            'comment' => 'has accepted your request.'
+            'comment' => 'has accepted your request.',
+        ]);
+        // return Inertia::render('Dashboard')->with('ticketAccepted', 'ticket has been accepted');
+        return back()->with('ticketAccepted', 'ticket has been accepted');
+    }
+
+    public function decline($id)
+    {
+        $query = Ticket::where('id', $id)->first();
+        $activitySender = Activity::where('ticket_id', $id)->first();
+        $activitySender->status = 'read';
+        $activitySender->save();
+
+        // cancel ticket
+        $query->status_id = 3;
+        $query->save();
+
+        // Activity Store Comment
+        $activity = Activity::create([
+            'ticket_id' => $id,
+            'sender_id' => Auth::id(),
+            // sender should receiver a notification that assigned user cancelled the request
+            'receiver_id' => $activitySender->sender_id,
+            'activity_type_id' => 2, // assignment type
+            'comment' => 'has cancelled the ticket.'
         ]);
 
-        return back()->with('ticketAccepted', 'ticket has been accepted');
+        return back()->with('ticketCancelled', 'Ticket has been cancelled.');
     }
 }

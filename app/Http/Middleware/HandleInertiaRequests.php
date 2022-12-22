@@ -48,6 +48,8 @@ class HandleInertiaRequests extends Middleware
         ->orderBy('created_at', 'desc')
         ->get();
         // dd($notifications);
+        $userNotificationId = Activity::where('receiver_id', Auth::id())->first();
+        // dd($userNotificationId);
         $filteredNotifications = $notifications->map(function ($notification) {
             return [
                 'id' => $notification->id,
@@ -57,6 +59,7 @@ class HandleInertiaRequests extends Middleware
                 'ticket_id' => $notification->ticket_id,
                 'reference_number' => $notification->tickets->reference_number,
                 'type' => $notification->activity_type_id,
+                'status' => $notification->status,
                 'comment' => $notification->comment,
                 'date' => $notification->created_at->diffForHumans()
             ];
@@ -86,6 +89,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'notification_counter' => $notificationCounter,
             'notifications' => $filteredNotifications,
+            'userNotificationId' => $userNotificationId,
             'user.roles' => $request->user() ? $request->user()->roles->pluck('name') : [],
             'user.permissions' => $request->user() ? $request->user()->getPermissionsViaRoles()->pluck('name') : []
         ]);

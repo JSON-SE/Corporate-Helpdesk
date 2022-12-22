@@ -35,9 +35,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('management/index', 'Management/Index')->name('management.index');
     Route::resource('admin-ticket-management', AdminTicketManagementController::class);
     Route::post('admin-ticket-management/accept/{id}', [AdminTicketManagementController::class, 'accept'])->name('admin-ticket-management.accept');
+    Route::put('admin-ticket-management/decline/{id}', [AdminTicketManagementController::class, 'decline'])->name('admin-ticket-management.decline');
     Route::resource('task', AdminTicketManagementController::class);
     Route::post('comment/store/{id}', [ActivityController::class, 'store'])->name('comment.store');
     Route::put('notified/{id}', [ActivityController::class, 'notified'])->name('notified.close');
+    Route::put('notified/clearall/{id}', [ActivityController::class, 'notifiedClearAll'])->name('notified.clearall');
     Route::get('show/ticket/{id}', [ActivityController::class, 'show'])->name('show.ticket');
 });
 

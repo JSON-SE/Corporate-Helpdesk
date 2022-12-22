@@ -21,14 +21,42 @@ const showingNavigationDropdown = ref(false);
 const show = ref(true);
 const open = ref(false);
 
-
-function showTicket(id){
+function showTicket(id) {
     Inertia.get(route("show.ticket", id));
 }
 
-function removeNotification(id){
-    confirm("Are you sure to remove this notification?");
-    Inertia.put(route("notified.close", id));
+function removeNotification(id) {
+    
+    if (confirm("Are you sure to remove this notification?")) {
+        Inertia.put(route("notified.close", id));
+    } else {
+        console.log('cancelled');
+    }
+}
+
+function removeAllNotifications(id) {
+   
+    if ( confirm("Are you sure to clear all notifications?")) {
+        Inertia.put(route("notified.clearall", id));
+    } else {
+        console.log('cancelled');
+    }
+}
+
+function acceptTicket(id) {
+    if (confirm("Accept Ticket?")) {
+        Inertia.post(route("admin-ticket-management.accept", id));
+    } else {
+        console.log("cancelled");
+    }
+}
+
+function declineTicket(id) {
+    if (confirm("Decline Ticket?")) {
+        Inertia.put(route("admin-ticket-management.decline", id));
+    } else {
+        console.log("cancelled");
+    }
 }
 </script>
 
@@ -379,195 +407,6 @@ function removeNotification(id){
 
             <!-- Page Content -->
             <main>
-                <TransitionRoot as="template" :show="open">
-                    <Dialog
-                        as="div"
-                        class="relative z-10"
-                        @close="open = false"
-                    >
-                        <TransitionChild
-                            as="template"
-                            enter="ease-in-out duration-500"
-                            enter-from="opacity-0"
-                            enter-to="opacity-100"
-                            leave="ease-in-out duration-500"
-                            leave-from="opacity-100"
-                            leave-to="opacity-0"
-                        >
-                            <div
-                                class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-                            />
-                        </TransitionChild>
-
-                        <div class="fixed inset-0 overflow-hidden">
-                            <div class="absolute inset-0 overflow-hidden">
-                                <div
-                                    class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
-                                >
-                                    <TransitionChild
-                                        as="template"
-                                        enter="transform transition ease-in-out duration-500 sm:duration-700"
-                                        enter-from="translate-x-full"
-                                        enter-to="translate-x-0"
-                                        leave="transform transition ease-in-out duration-500 sm:duration-700"
-                                        leave-from="translate-x-0"
-                                        leave-to="translate-x-full"
-                                    >
-                                        <DialogPanel
-                                            class="pointer-events-auto w-screen max-w-md"
-                                        >
-                                            <div
-                                                class="flex h-full flex-col overflow-y-scroll bg-gray-50 py-6 shadow-xl"
-                                            >
-                                                <div class="px-4 sm:px-6">
-                                                    <div
-                                                        class="flex items-start justify-between"
-                                                    >
-                                                        <DialogTitle
-                                                            class="text-lg font-medium text-gray-900"
-                                                            >Notifications</DialogTitle
-                                                        >
-                                                        <div
-                                                            class="ml-3 flex h-7 items-center"
-                                                        >
-                                                            <button
-                                                                type="button"
-                                                                class="rounded-md bg-grey-50 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                                                @click="
-                                                                    open = false
-                                                                "
-                                                            >
-                                                                <span
-                                                                    class="sr-only"
-                                                                    >Close
-                                                                    panel</span
-                                                                >
-                                                                <XMarkIcon
-                                                                    class="h-6 w-6"
-                                                                    aria-hidden="true"
-                                                                />
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="relative mt-6 flex-1 px-4 sm:px-6"
-                                                >
-                                                    <!-- Replace with your content -->
-
-                                                    <div
-                                                        v-for="item in $page
-                                                            .props
-                                                            .notifications"
-                                                        :key="item.id"
-                                                    >
-                                                        <div
-                                                            class="w-full p-3 mt-4 bg-white rounded shadow flex flex-shrink-0"
-                                                        >
-                                                            <div
-                                                                tabindex="0"
-                                                                aria-label="post icon"
-                                                                role="img"
-                                                                class="focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex items-center justify-center"
-                                                            >
-                                                                <svg
-                                                                    width="16"
-                                                                    height="16"
-                                                                    viewBox="0 0 16 16"
-                                                                    fill="none"
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                >
-                                                                    <path
-                                                                        d="M4.30325 12.6667L1.33325 15V2.66667C1.33325 2.48986 1.40349 2.32029 1.52851 2.19526C1.65354 2.07024 1.82311 2 1.99992 2H13.9999C14.1767 2 14.3463 2.07024 14.4713 2.19526C14.5963 2.32029 14.6666 2.48986 14.6666 2.66667V12C14.6666 12.1768 14.5963 12.3464 14.4713 12.4714C14.3463 12.5964 14.1767 12.6667 13.9999 12.6667H4.30325ZM5.33325 6.66667V8H10.6666V6.66667H5.33325Z"
-                                                                        fill="#4338CA"
-                                                                    />
-                                                                </svg>
-                                                            </div>
-                                                            <div
-                                                                class="pl-3 w-full"
-                                                            >
-                                                                <div
-                                                                    class="flex items-center justify-between w-full"
-                                                                >
-                                                                    <p
-                                                                        tabindex="0"
-                                                                        class="focus:outline-none text-sm leading-none"
-                                                                    >
-                                                                         <div role="button"
-                                                                         @click="showTicket(item.id)"><span
-                                                                            class="text-indigo-700"
-                                                                            >{{
-                                                                                item.sender_name
-                                                                            }}</span
-                                                                        ></div>
-                                                                        
-                                                                        <div v-if="item.type === 1">
-                                                                            commented on your ticket
-                                                                        </div>
-                                                                        <div v-else-if="item.type === 2">
-                                                                            {{ item.comment }}
-                                                                        </div>
-                                                                        <div v-else-if="item.type === 4">
-                                                                            has assigned you on a ticket
-                                                                        </div>
-                                                                        <div role="button"
-                                                                         @click="showTicket(item.id)">
-                                                                         <span
-                                                                            class="text-indigo-700"
-                                                                            >{{ item.reference_number }}</span
-                                                                        ></div>
-                                                                        
-                                                                    </p>
-                                                                    <button
-                                                                        tabindex="0"
-                                                                        aria-label="close icon"
-                                                                        @click="removeNotification(item.id)"
-                                                                        type="button"
-                                                                        class="focus:outline-none cursor-pointer"
-                                                                    >
-                                                                        <svg
-                                                                            width="14"
-                                                                            height="14"
-                                                                            viewBox="0 0 14 14"
-                                                                            fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                        >
-                                                                            <path
-                                                                                d="M10.5 3.5L3.5 10.5"
-                                                                                stroke="#4B5563"
-                                                                                stroke-width="1.25"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                            />
-                                                                            <path
-                                                                                d="M3.5 3.5L10.5 10.5"
-                                                                                stroke="#4B5563"
-                                                                                stroke-width="1.25"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                            />
-                                                                        </svg>
-                                                                    </button>
-                                                                </div>
-                                                                <p
-                                                                    tabindex="0"
-                                                                    class="focus:outline-none text-xs leading-3 pt-1 text-gray-500"
-                                                                >
-                                                                   {{ item.date }}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- /End replace -->
-                                                </div>
-                                            </div>
-                                        </DialogPanel>
-                                    </TransitionChild>
-                                </div>
-                            </div>
-                        </div>
-                    </Dialog>
-                </TransitionRoot>
                 <!-- Alert Ticket Created -->
                 <div
                     v-if="$page.props.flash.ticketCreated"
@@ -1131,6 +970,228 @@ function removeNotification(id){
                         </transition>
                     </div>
                 </div>
+                 <!-- Notifications -->
+                <TransitionRoot as="template" :show="open">
+                    <Dialog
+                        as="div"
+                        class="relative z-10"
+                        @close="open = false"
+                    >
+                        <TransitionChild
+                            as="template"
+                            enter="ease-in-out duration-500"
+                            enter-from="opacity-0"
+                            enter-to="opacity-100"
+                            leave="ease-in-out duration-500"
+                            leave-from="opacity-100"
+                            leave-to="opacity-0"
+                        >
+                            <div
+                                class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                            />
+                        </TransitionChild>
+
+                        <div class="fixed inset-0 overflow-hidden">
+                            <div class="absolute inset-0 overflow-hidden">
+                                <div
+                                    class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
+                                >
+                                    <TransitionChild
+                                        as="template"
+                                        enter="transform transition ease-in-out duration-500 sm:duration-700"
+                                        enter-from="translate-x-full"
+                                        enter-to="translate-x-0"
+                                        leave="transform transition ease-in-out duration-500 sm:duration-700"
+                                        leave-from="translate-x-0"
+                                        leave-to="translate-x-full"
+                                    >
+                                        <DialogPanel
+                                            class="pointer-events-auto w-screen max-w-md"
+                                        >
+                                            <div
+                                                class="flex h-full flex-col overflow-y-scroll bg-gray-50 py-6 shadow-xl"
+                                            >
+                                                <div class="px-4 sm:px-6">
+                                                    <div
+                                                        class="flex items-start justify-between"
+                                                    >
+                                                        <DialogTitle
+                                                            class="text-lg font-medium text-gray-900"
+                                                            >Notifications</DialogTitle
+                                                        >
+                                                        <div
+                                                            class="ml-3 flex h-7 items-center"
+                                                        >
+                                                            <button
+                                                                type="button"
+                                                                class="rounded-md bg-grey-50 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                                                @click="
+                                                                    open = false
+                                                                "
+                                                            >
+                                                                <span
+                                                                    class="sr-only"
+                                                                    >Close
+                                                                    panel</span
+                                                                >
+                                                                <XMarkIcon
+                                                                    class="h-6 w-6"
+                                                                    aria-hidden="true"
+                                                                />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div v-if="$page.props.notification_counter" class="flex justify-end mr-6 mt-5">
+                                                    <button
+                                                        type="button"
+                                                        class="rounded-md bg-grey-50 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                                        @click="
+                                                            removeAllNotifications($page.props.userNotificationId.receiver_id)
+                                                        "
+                                                    >
+                                                        Clear All
+                                                    </button>
+                                                </div>
+                                                <div
+                                                    class="relative mt-2 flex-1 px-4 sm:px-6"
+                                                >
+                                                    <!-- Replace with your content -->
+                                                    
+                                                    <div
+                                                        v-for="item in $page
+                                                            .props
+                                                            .notifications"
+                                                        :key="item.id"
+                                                    >   
+                                                        <div
+                                                            class="w-full p-3 mt-4 bg-white rounded shadow flex flex-shrink-0"
+                                                        >
+                                                            <!-- avatar here -->
+                                                            <div
+                                                                class="pl-2 w-full"
+                                                            >
+                                                                <div
+                                                                    class="flex items-center justify-between w-full"
+                                                                >
+                                                                    <p
+                                                                        tabindex="0"
+                                                                        class="focus:outline-none text-sm leading-none"
+                                                                    >
+                                                                            <div role="button"
+                                                                            @click="showTicket(item.id)"><span
+                                                                                class="text-indigo-700"
+                                                                                >{{
+                                                                                    item.sender_name
+                                                                                }}</span
+                                                                            ></div>
+                                                                            
+                                                                            <div v-if="item.type === 1">
+                                                                                commented on your ticket
+                                                                            </div>
+                                                                            <div v-else-if="item.type === 2">
+                                                                                {{ item.comment }}
+                                                                            </div>
+                                                                            <div v-else-if="item.type === 4">
+                                                                                has assigned you on a ticket
+                                                                            </div>
+                                                                            <div role="button"
+                                                                            @click="showTicket(item.id)">
+                                                                            <span
+                                                                                class="text-indigo-700"
+                                                                                >{{ item.reference_number }}</span
+                                                                            ></div>
+                                                                        <p
+                                                                                tabindex="0"
+                                                                                class="focus:outline-none text-xs leading-3 pt-1 text-gray-500"
+                                                                            >
+                                                                            {{ item.date }}
+                                                                        </p>
+                                                                        
+                                                                    </p>
+                                                                    <!-- buttons -->
+                                                                                                              
+                                                                    <div class="flex">
+                                                                        <div class="flex flex-col mr-3 space-y-1">
+                                                                            <button
+                                                                                v-if="item.type === 4 && item.status === 'unread'"
+                                                                                tabindex="0"
+                                                                                @click="acceptTicket(item.ticket_id)"
+                                                                                type="button"
+                                                                                class="inline-flex items-center rounded border border-transparent bg-indigo-600 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                                                            >
+                                                                                <strong>Accept</strong>
+                                                                            </button>
+                                                                            <button
+                                                                                v-if="item.type === 4 && item.status === 'unread'"
+                                                                                tabindex="0"
+                                                                                @click="declineTicket(item.ticket_id)"
+                                                                                type="button"
+                                                                                class="inline-flex items-center rounded border border-gray-300 bg-red-400 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                                                            >
+                                                                                <strong>Decline</strong>
+                                                                            </button>
+                                                                            <button
+                                                                                v-if="item.type === 1 || item.type === 2 && item.status === 'unread'"
+                                                                                tabindex="0"
+                                                                                @click="showTicket(item.id)"
+                                                                                type="button"
+                                                                                class="inline-flex items-center rounded border border-transparent bg-indigo-600 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                                                            >
+                                                                                <strong>View</strong>
+                                                                            </button> 
+                                                                        </div>
+                                                            
+                                                                        
+                                                                    </div>
+                                                                    <!-- end buttons -->
+                                                                </div>
+                                                            </div>
+                                                            <!-- clear notification button -->
+                                                            <div class="mt-4">
+                                                                <button
+                                                                    tabindex="0"
+                                                                    @click="removeNotification(item.id)"
+                                                                    type="button"
+                                                                    class="inline-flex focus:outline-none cursor-pointer"
+                                                                >
+                                                                    <svg
+                                                                        width="14"
+                                                                        height="14"
+                                                                        viewBox="0 0 14 14"
+                                                                        fill="none"
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                    >
+                                                                        <path
+                                                                            d="M10.5 3.5L3.5 10.5"
+                                                                            stroke="#4B5563"
+                                                                            stroke-width="1.25"
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round"
+                                                                        />
+                                                                        <path
+                                                                            d="M3.5 3.5L10.5 10.5"
+                                                                            stroke="#4B5563"
+                                                                            stroke-width="1.25"
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round"
+                                                                        />
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                            <!-- end clear notification button -->
+                                                        </div>
+                                                    </div>
+                                                    <!-- /End replace -->
+                                                </div>
+                                            </div>
+                                        </DialogPanel>
+                                    </TransitionChild>
+                                </div>
+                            </div>
+                        </div>
+                    </Dialog>
+                </TransitionRoot>
                 <slot />
             </main>
         </div>
