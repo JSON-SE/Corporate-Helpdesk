@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
@@ -16,6 +16,14 @@ import {
 } from "@headlessui/vue";
 import { CheckCircleIcon } from "@heroicons/vue/20/solid";
 import { BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+
+onMounted(() => {
+    // Set the interval to reload the page every 60 seconds (60000 milliseconds)
+    setInterval(() => {
+        // Use the Inertia.reload function to reload the page
+        Inertia.reload();
+    }, 5000);
+});
 
 const showingNavigationDropdown = ref(false);
 const show = ref(true);
@@ -173,7 +181,7 @@ function declineTicket(id) {
                                             Tasks
                                         </DropdownLink>
                                         <DropdownLink
-                                            :href="route('ticket.index')"
+                                            :href="route('task.accomplishment')"
                                             as="button"
                                         >
                                             Accomplishments
@@ -576,7 +584,7 @@ function declineTicket(id) {
                                             <p
                                                 class="mt-1 text-sm text-red-500"
                                             >
-                                                Your ticket has been removed.
+                                                Ticket has been removed.
                                             </p>
                                         </div>
                                         <div class="ml-4 flex flex-shrink-0">
@@ -946,7 +954,7 @@ function declineTicket(id) {
                                             <p
                                                 class="mt-1 text-sm text-red-500"
                                             >
-                                                Your ticket has been cancelled.
+                                                Ticket has been cancelled.
                                             </p>
                                         </div>
                                         <div class="ml-4 flex flex-shrink-0">

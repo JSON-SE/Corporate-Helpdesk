@@ -183,4 +183,9 @@ class AdminTicketManagementController extends Controller
 
         return back()->with('ticketCancelled', 'Ticket has been cancelled.');
     }
+
+    public function accomplishment()
+    {
+        dd('test');
+    }
 }
