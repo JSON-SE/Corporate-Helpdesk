@@ -379,7 +379,7 @@ function setStatus() {
                                             <div
                                                 class="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2"
                                             >
-                                                <div class="flex items-center">
+                                                <!-- <div class="flex items-center">
                                                     <input
                                                         v-on:change="
                                                             form.fileUpload
@@ -388,7 +388,7 @@ function setStatus() {
                                                         class="py-2 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
                                                         multiple
                                                     />
-                                                </div>
+                                                </div> -->
                                                 <div class="flex-shrink-0">
                                                     <button
                                                         type="submit"

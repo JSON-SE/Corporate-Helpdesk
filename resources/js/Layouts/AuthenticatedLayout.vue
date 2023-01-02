@@ -22,7 +22,7 @@ onMounted(() => {
     setInterval(() => {
         // Use the Inertia.reload function to reload the page
         Inertia.reload();
-    }, 5000);
+    }, 10000);
 });
 
 const showingNavigationDropdown = ref(false);
@@ -34,20 +34,18 @@ function showTicket(id) {
 }
 
 function removeNotification(id) {
-    
     if (confirm("Are you sure to remove this notification?")) {
         Inertia.put(route("notified.close", id));
     } else {
-        console.log('cancelled');
+        console.log("cancelled");
     }
 }
 
 function removeAllNotifications(id) {
-   
-    if ( confirm("Are you sure to clear all notifications?")) {
+    if (confirm("Are you sure to clear all notifications?")) {
         Inertia.put(route("notified.clearall", id));
     } else {
-        console.log('cancelled');
+        console.log("cancelled");
     }
 }
 
@@ -978,7 +976,7 @@ function declineTicket(id) {
                         </transition>
                     </div>
                 </div>
-                 <!-- Notifications -->
+                <!-- Notifications -->
                 <TransitionRoot as="template" :show="open">
                     <Dialog
                         as="div"
@@ -1050,12 +1048,22 @@ function declineTicket(id) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div v-if="$page.props.notification_counter" class="flex justify-end mr-6 mt-5">
+                                                <div
+                                                    v-if="
+                                                        $page.props
+                                                            .notification_counter
+                                                    "
+                                                    class="flex justify-end mr-6 mt-5"
+                                                >
                                                     <button
                                                         type="button"
                                                         class="rounded-md bg-grey-50 text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                                         @click="
-                                                            removeAllNotifications($page.props.userNotificationId.receiver_id)
+                                                            removeAllNotifications(
+                                                                $page.props
+                                                                    .userNotificationId
+                                                                    .receiver_id
+                                                            )
                                                         "
                                                     >
                                                         Clear All
@@ -1065,13 +1073,13 @@ function declineTicket(id) {
                                                     class="relative mt-2 flex-1 px-4 sm:px-6"
                                                 >
                                                     <!-- Replace with your content -->
-                                                    
+
                                                     <div
                                                         v-for="item in $page
                                                             .props
                                                             .notifications"
                                                         :key="item.id"
-                                                    >   
+                                                    >
                                                         <div
                                                             class="w-full p-3 mt-4 bg-white rounded shadow flex flex-shrink-0"
                                                         >
@@ -1082,75 +1090,153 @@ function declineTicket(id) {
                                                                 <div
                                                                     class="flex items-center justify-between w-full"
                                                                 >
-                                                                    <p
+                                                                    <!-- buttons -->
+                                                                    <div
                                                                         tabindex="0"
                                                                         class="focus:outline-none text-sm leading-none"
                                                                     >
-                                                                            <div role="button"
-                                                                            @click="showTicket(item.id)"><span
+                                                                        <div
+                                                                            role="button"
+                                                                            @click="
+                                                                                showTicket(
+                                                                                    item.id
+                                                                                )
+                                                                            "
+                                                                        >
+                                                                            <span
                                                                                 class="text-indigo-700"
                                                                                 >{{
                                                                                     item.sender_name
                                                                                 }}</span
-                                                                            ></div>
-                                                                            
-                                                                            <div v-if="item.type === 1">
-                                                                                commented on your ticket
-                                                                            </div>
-                                                                            <div v-else-if="item.type === 2">
-                                                                                {{ item.comment }}
-                                                                            </div>
-                                                                            <div v-else-if="item.type === 4">
-                                                                                has assigned you on a ticket
-                                                                            </div>
-                                                                            <div role="button"
-                                                                            @click="showTicket(item.id)">
+                                                                            >
+                                                                        </div>
+
+                                                                        <div
+                                                                            v-if="
+                                                                                item.type ===
+                                                                                1
+                                                                            "
+                                                                        >
+                                                                            commented
+                                                                            on
+                                                                            your
+                                                                            ticket
+                                                                        </div>
+                                                                        <div
+                                                                            v-else-if="
+                                                                                item.type ===
+                                                                                2
+                                                                            "
+                                                                        >
+                                                                            {{
+                                                                                item.comment
+                                                                            }}
+                                                                        </div>
+                                                                        <div
+                                                                            v-else-if="
+                                                                                item.type ===
+                                                                                4
+                                                                            "
+                                                                        >
+                                                                            has
+                                                                            assigned
+                                                                            you
+                                                                            on a
+                                                                            ticket
+                                                                        </div>
+                                                                        <div
+                                                                            role="button"
+                                                                            @click="
+                                                                                showTicket(
+                                                                                    item.id
+                                                                                )
+                                                                            "
+                                                                        >
                                                                             <span
                                                                                 class="text-indigo-700"
-                                                                                >{{ item.reference_number }}</span
-                                                                            ></div>
-                                                                        <p
-                                                                                tabindex="0"
-                                                                                class="focus:outline-none text-xs leading-3 pt-1 text-gray-500"
+                                                                                >{{
+                                                                                    item.reference_number
+                                                                                }}</span
                                                                             >
-                                                                            {{ item.date }}
+                                                                        </div>
+                                                                        <p
+                                                                            tabindex="0"
+                                                                            class="focus:outline-none text-xs leading-3 pt-1 text-gray-500"
+                                                                        >
+                                                                            {{
+                                                                                item.date
+                                                                            }}
                                                                         </p>
-                                                                        
-                                                                    </p>
-                                                                    <!-- buttons -->
-                                                                                                              
-                                                                    <div class="flex">
-                                                                        <div class="flex flex-col mr-3 space-y-1">
+                                                                    </div>
+                                                                    <div
+                                                                        class="flex"
+                                                                    >
+                                                                        <div
+                                                                            class="flex flex-col mr-3 space-y-1"
+                                                                        >
                                                                             <button
-                                                                                v-if="item.type === 4 && item.status === 'unread'"
+                                                                                v-if="
+                                                                                    item.type ===
+                                                                                        4 &&
+                                                                                    item.status ===
+                                                                                        'unread'
+                                                                                "
                                                                                 tabindex="0"
-                                                                                @click="acceptTicket(item.ticket_id)"
+                                                                                @click="
+                                                                                    acceptTicket(
+                                                                                        item.ticket_id
+                                                                                    )
+                                                                                "
                                                                                 type="button"
                                                                                 class="inline-flex items-center rounded border border-transparent bg-indigo-600 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                                                             >
-                                                                                <strong>Accept</strong>
+                                                                                <strong
+                                                                                    >Accept</strong
+                                                                                >
                                                                             </button>
                                                                             <button
-                                                                                v-if="item.type === 4 && item.status === 'unread'"
+                                                                                v-if="
+                                                                                    item.type ===
+                                                                                        4 &&
+                                                                                    item.status ===
+                                                                                        'unread'
+                                                                                "
                                                                                 tabindex="0"
-                                                                                @click="declineTicket(item.ticket_id)"
+                                                                                @click="
+                                                                                    declineTicket(
+                                                                                        item.ticket_id
+                                                                                    )
+                                                                                "
                                                                                 type="button"
                                                                                 class="inline-flex items-center rounded border border-gray-300 bg-red-400 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                                                             >
-                                                                                <strong>Decline</strong>
+                                                                                <strong
+                                                                                    >Decline</strong
+                                                                                >
                                                                             </button>
                                                                             <button
-                                                                                v-if="item.type === 1 || item.type === 2 && item.status === 'unread'"
+                                                                                v-if="
+                                                                                    item.type ===
+                                                                                        1 ||
+                                                                                    (item.type ===
+                                                                                        2 &&
+                                                                                        item.status ===
+                                                                                            'unread')
+                                                                                "
                                                                                 tabindex="0"
-                                                                                @click="showTicket(item.id)"
+                                                                                @click="
+                                                                                    showTicket(
+                                                                                        item.id
+                                                                                    )
+                                                                                "
                                                                                 type="button"
                                                                                 class="inline-flex items-center rounded border border-transparent bg-indigo-600 px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                                                             >
-                                                                                <strong>View</strong>
-                                                                            </button> 
+                                                                                <strong
+                                                                                    >View</strong
+                                                                                >
+                                                                            </button>
                                                                         </div>
-                                                            
-                                                                        
                                                                     </div>
                                                                     <!-- end buttons -->
                                                                 </div>
@@ -1159,7 +1245,11 @@ function declineTicket(id) {
                                                             <div class="mt-4">
                                                                 <button
                                                                     tabindex="0"
-                                                                    @click="removeNotification(item.id)"
+                                                                    @click="
+                                                                        removeNotification(
+                                                                            item.id
+                                                                        )
+                                                                    "
                                                                     type="button"
                                                                     class="inline-flex focus:outline-none cursor-pointer"
                                                                 >
