@@ -37,7 +37,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('admin-ticket-management/accept/{id}', [AdminTicketManagementController::class, 'accept'])->name('admin-ticket-management.accept');
     Route::put('admin-ticket-management/decline/{id}', [AdminTicketManagementController::class, 'decline'])->name('admin-ticket-management.decline');
     Route::resource('task', AdminTicketManagementController::class);
-    Route::get('task/accomp lishment', [AdminTicketManagementController::class, 'accomplishment'])->name('task.accomplishment');
+    // Route::get('task/accomplishment', [AdminTicketManagementController::class, 'accomplishment'])->name('task.accomplishment');
     Route::post('comment/store/{id}', [ActivityController::class, 'store'])->name('comment.store');
     Route::put('notified/{id}', [ActivityController::class, 'notified'])->name('notified.close');
     Route::put('notified/clearall/{id}', [ActivityController::class, 'notifiedClearAll'])->name('notified.clearall');
