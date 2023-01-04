@@ -178,12 +178,12 @@ function declineTicket(id) {
                                         >
                                             Tasks
                                         </DropdownLink>
-                                        <DropdownLink
+                                        <!-- <DropdownLink
                                             :href="route('task.accomplishment')"
                                             as="button"
                                         >
                                             Accomplishments
-                                        </DropdownLink>
+                                        </DropdownLink> -->
                                     </template>
                                 </Dropdown>
                             </div>
