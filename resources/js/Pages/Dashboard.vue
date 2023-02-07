@@ -12,7 +12,7 @@ import {
 } from "@heroicons/vue/20/solid";
 import { Link } from "@inertiajs/inertia-vue3";
 // import { moment } from "moment";
-import * as moment from "moment";
+// import * as moment from "moment";
 import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({
@@ -319,6 +319,7 @@ function acceptTicket(id) {
                                 </Link>
                             </div>
                         </div>
+                        <!-- Ticket Table -->
                         <div class="mt-8 flex flex-col">
                             <div
                                 class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8"

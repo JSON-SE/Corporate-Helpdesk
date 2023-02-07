@@ -228,9 +228,12 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        $res = $ticket;
-        $categories = Category::all();
-        return Inertia::render('Ticket/Edit', compact('res', 'categories'));
+        return Inertia::render('Ticket/Edit', [
+            'res' => $ticket,
+            'categories' => Category::all(),
+            'offices' => Office::all(),
+            'users' => User::where('office_id', Request::input('office_id'))->get(),
+        ]);
     }
 
     /**
